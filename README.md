@@ -284,3 +284,7 @@ davidadade9@gmail.com
 **Document Version:** 1.0  
 **Last Updated:** December 2024  
 **Prepared for:** Program stakeholders, school administrators, potential funders
+
+© 2024 David Adade | Ontario Sports STEM Program
+Licensed under CC BY-ND 4.0
+https://creativecommons.org/licenses/by-nd/4.0/
