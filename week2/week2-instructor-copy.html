@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2: Working with Real Sports Data</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .program-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            margin: 30px;
+        }
+        
+        .program-info h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #764ba2;
+        }
+        
+        .info-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .day-section {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: -30px -30px 25px -30px;
+        }
+        
+        .day-header h2 {
+            font-size: 1.8em;
+        }
+        
+        .day-header .day-focus {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .objectives {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .objectives h4 {
+            color: #1565C0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .objectives ul {
+            margin-left: 20px;
+        }
+        
+        .objectives li {
+            margin-bottom: 8px;
+        }
+        
+        .materials {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .materials h4 {
+            color: #e65100;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .activity {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .activity-title {
+            font-size: 1.3em;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+        
+        .time-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .discussion-prompt {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .discussion-prompt strong {
+            color: #2e7d32;
+        }
+        
+        .instructor-note {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        
+        .instructor-note::before {
+            content: "👨‍🏫 Instructor Note: ";
+            font-weight: bold;
+            color: #f57f17;
+        }
+        
+        .key-concept {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .key-concept strong {
+            color: #6a1b9a;
+        }
+        
+        .homework {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .homework h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+        }
+        
+        ul {
+            margin-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .tip-box {
+            background: #e1f5fe;
+            border: 2px dashed #0288d1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box::before {
+            content: "💡 Pro Tip: ";
+            font-weight: bold;
+            color: #01579b;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Week 2: Working with Real Sports Data 🏀</h1>
+            <p class="subtitle">From Individual Stats to Entire Datasets</p>
+        </header>
+        
+        <div class="program-info">
+            <h3>Week 2 Overview</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Focus</strong>
+                    Loading and exploring real sports datasets
+                </div>
+                <div class="info-item">
+                    <strong>New Tool</strong>
+                    Pandas library for data analysis
+                </div>
+                <div class="info-item">
+                    <strong>Skills</strong>
+                    Reading CSV files, filtering data, basic exploration
+                </div>
+                <div class="info-item">
+                    <strong>Dataset</strong>
+                    NBA player statistics (400+ players)
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- DAY 1 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 1 (Session 3): Loading Real Data</h2>
+                    <p class="day-focus">"From 3 players to 400+ players in one line of code"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand what datasets are and why they're powerful</li>
+                        <li>Learn what CSV files are and how they store data</li>
+                        <li>Use pandas library to load real NBA data</li>
+                        <li>Explore dataset structure (rows, columns, data types)</li>
+                        <li>View and understand basic dataset information</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>Laptops with Google Colab access</li>
+                        <li>NBA player stats CSV file (prepared and uploaded to shared drive)</li>
+                        <li>Sample CSV displayed on screen for visualization</li>
+                        <li>Projector for demonstrations</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: The Problem with Small Data</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Opening Hook (5 minutes):</strong></p>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Question:</strong> "Last week you analyzed 3 games of data. How long would it take to analyze every NBA player's entire season?"
+                    </div>
+                    
+                    <p><strong>Quick Math Demo:</strong></p>
+                    <ul>
+                        <li>3 games = you wrote about 10 lines of code</li>
+                        <li>1 NBA player's full season = 82 games</li>
+                        <li>All NBA players = 450+ players</li>
+                        <li>Total = 36,900 games to analyze manually! 😱</li>
+                    </ul>
+                    
+                    <div class="key-concept">
+                        <strong>The Solution:</strong> Datasets let us work with THOUSANDS of data points using just a few lines of code.
+                    </div>
+                    
+                    <p><strong>Show Visual Example (5 minutes):</strong></p>
+                    
+                    <p>Display a spreadsheet on screen with NBA stats:</p>
+                    <ul>
+                        <li>Show columns: Player, Team, Points, Rebounds, Assists</li>
+                        <li>Show rows: 10-15 different players</li>
+                        <li>"This is what a dataset looks like - organized rows and columns"</li>
+                    </ul>
+                    
+                    <p><strong>Discussion (5 minutes):</strong></p>
+                    <ol>
+                        <li>"What could we learn from having ALL NBA players' stats?"</li>
+                        <li>"What questions could we answer that we couldn't before?"</li>
+                    </ol>
+                    
+                    <div class="instructor-note">
+                        Potential student answers: Compare players, find the best, see team patterns, discover underrated players, predict awards, etc. Get them excited about the possibilities!
+                    </div>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: What is a CSV File?</div>
+                        <div class="time-badge">10 minutes</div>
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>CSV = Comma-Separated Values</strong><br>
+                        A simple way to store data in a text file. Think of it like a digital spreadsheet.
+                    </div>
+                    
+                    <p><strong>Visual Demonstration (5 minutes):</strong></p>
+                    
+                    <p>Show on screen what a CSV actually looks like:</p>
+                    
+                    <div class="code-block">
+Player,Team,Points,Rebounds,Assists
+LeBron James,Lakers,25.7,7.3,7.3
+Steph Curry,Warriors,29.4,5.1,6.3
+Kevin Durant,Suns,28.2,6.7,5.0
+                    </div>
+                    
+                    <p><strong>Explain:</strong></p>
+                    <ul>
+                        <li>First line = column names (headers)</li>
+                        <li>Each line after = one player (one row)</li>
+                        <li>Commas separate the different stats (columns)</li>
+                        <li>Computers can read this super fast!</li>
+                    </ul>
+                    
+                    <p><strong>Why CSV? (3 minutes):</strong></p>
+                    <ul>
+                        <li>✅ Simple and easy to work with</li>
+                        <li>✅ Works with any programming language</li>
+                        <li>✅ Can hold HUGE amounts of data</li>
+                        <li>✅ Used by NBA, NHL, MLB, FIFA - all major sports!</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        Tell students: "You can open CSV files in Excel, Google Sheets, or load them into Python. They're the standard way data analysts share information."
+                    </div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Meet Pandas - Your Data Superpower</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>Introduction to Pandas (5 minutes):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Pandas</strong> = A Python library that makes working with data EASY. It's like Excel but way more powerful and built for code.
+                    </div>
+                    
+                    <p><strong>Why "Pandas"?</strong></p>
+                    <ul>
+                        <li>Name comes from "Panel Data" (a type of statistics)</li>
+                        <li>Used by data scientists everywhere - Google, NBA teams, hospitals, banks</li>
+                        <li>Makes analyzing millions of rows of data simple</li>
+                    </ul>
+                    
+                    <p><strong>First Time Using Pandas (15 minutes):</strong></p>
+                    
+                    <p>Students follow along in Google Colab:</p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Step 1: Import pandas library</span>
+import pandas as pd
+
+<span class="code-comment"># Step 2: Load the NBA data</span>
+data = pd.read_csv("nba_stats.csv")
+
+<span class="code-comment"># Step 3: Look at the first few rows</span>
+print(data.head())
+                    </div>
+                    
+                    <div class="instructor-note">
+                        Have the CSV file pre-uploaded to Google Drive and share the link with students. They'll need to mount Google Drive or upload the file directly to Colab.
+                    </div>
+                    
+                    <p><strong>Explain Each Line:</strong></p>
+                    <ul>
+                        <li><code>import pandas as pd</code> → Load the pandas tool and nickname it "pd"</li>
+                        <li><code>pd.read_csv()</code> → Tell pandas to read a CSV file</li>
+                        <li><code>data.head()</code> → Show the first 5 rows</li>
+                    </ul>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Moment of Celebration:</strong> "You just loaded data on 400+ NBA players in 3 lines of code! That would take HOURS to type manually!"
+                    </div>
+                    
+                    <p><strong>What Students See:</strong></p>
+                    <p>They'll see a nicely formatted table with player names, teams, and statistics. Point out:</p>
+                    <ul>
+                        <li>Column headers at the top</li>
+                        <li>Each row is one player</li>
+                        <li>Numbers are properly formatted</li>
+                        <li>It looks like a spreadsheet in their code!</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Exploring Your Dataset</div>
+                        <div class="time-badge">30 minutes</div>
+                    </div>
+                    
+                    <p><strong>Basic Exploration Commands (25 minutes):</strong></p>
+                    
+                    <p>Teach students these essential pandas commands:</p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># See the first 5 rows</span>
+print(data.head())
+
+<span class="code-comment"># See the last 5 rows</span>
+print(data.tail())
+
+<span class="code-comment"># How many rows and columns?</span>
+print(data.shape)
+
+<span class="code-comment"># What are the column names?</span>
+print(data.columns)
+
+<span class="code-comment"># Get basic statistics</span>
+print(data.describe())
+
+<span class="code-comment"># Information about the dataset</span>
+print(data.info())
+                    </div>
+                    
+                    <p><strong>Walk Through Each Command:</strong></p>
+                    
+                    <p><strong>1. data.shape</strong> (5 minutes)</p>
+                    <ul>
+                        <li>Returns: (450, 25) → 450 rows, 25 columns</li>
+                        <li>"That means 450 players and 25 different statistics!"</li>
+                        <li>Students try it and share what numbers they get</li>
+                    </ul>
+                    
+                    <p><strong>2. data.columns</strong> (5 minutes)</p>
+                    <ul>
+                        <li>Shows all column names: Player, Team, GP, MIN, PTS, REB, AST, etc.</li>
+                        <li>"These are all the stats we can analyze!"</li>
+                        <li>Ask: "Which stat are you most interested in?"</li>
+                    </ul>
+                    
+                    <p><strong>3. data.describe()</strong> (8 minutes)</p>
+                    <ul>
+                        <li>Shows: count, mean, std, min, max for every numeric column</li>
+                        <li>Example: Average NBA player scores 10.5 PPG</li>
+                        <li>"This gives us a quick summary of the whole league!"</li>
+                    </ul>
+                    
+                    <p><strong>4. data.info()</strong> (5 minutes)</p>
+                    <ul>
+                        <li>Shows data types and missing values</li>
+                        <li>"This tells us if our data is clean and complete"</li>
+                    </ul>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Partner Activity:</strong> "Look at the data.describe() output. Find one surprising fact about NBA players and share it with your partner."
+                    </div>
+                    
+                    <div class="instructor-note">
+                        Walk around and help students. Common issues: typos, forgetting parentheses, not understanding output. Take time to explain what they're seeing.
+                    </div>
+                    
+                    <p><strong>Guided Practice (5 minutes):</strong></p>
+                    
+                    <p>Students independently try:</p>
+                    <ul>
+                        <li>Find how many players are in the dataset</li>
+                        <li>List all the column names</li>
+                        <li>Look at the first 10 rows (hint: head(10))</li>
+                        <li>Find the average points per game</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 5 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 5: Reflection & Preview</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>What We Learned (5 minutes):</strong></p>
+                    
+                    <ul>
+                        <li>✅ Datasets hold lots of organized data</li>
+                        <li>✅ CSV files are the standard format</li>
+                        <li>✅ Pandas makes loading data super easy</li>
+                        <li>✅ We can explore data with simple commands</li>
+                    </ul>
+                    
+                    <p><strong>Think-Pair-Share (5 minutes):</strong></p>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Question:</strong> "What's one question you could answer now that you have ALL NBA players' data?"
+                    </div>
+                    
+                    <p>Students:</p>
+                    <ol>
+                        <li>Think individually (1 min)</li>
+                        <li>Share with partner (2 min)</li>
+                        <li>2-3 volunteers share with class (2 min)</li>
+                    </ol>
+                    
+                    <p><strong>Preview Next Session (3 minutes):</strong></p>
+                    
+                    <p>"Next time, we'll learn how to:</p>
+                    <ul>
+                        <li>Find specific players in the dataset</li>
+                        <li>Filter data (like finding all players who score over 20 PPG)</li>
+                        <li>Sort players by different stats</li>
+                        <li>Compare players directly</li>
+                    </ul>
+                    <p>You'll become data detectives!"</p>
+                    
+                    <div class="tip-box">
+                        Leave time for questions. This is a big conceptual leap from Week 1, so check for understanding.
+                    </div>
+                </div>
+                
+                <div class="homework">
+                    <h4>📝 Optional Homework</h4>
+                    <ul>
+                        <li>Run all the exploration commands we learned today and take screenshots of the output</li>
+                        <li>Write down 3 questions you want to answer using the NBA dataset</li>
+                        <li>Look up one player you're curious about - we'll learn how to find them in the data next class!</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- DAY 2 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 2 (Session 4): Finding and Filtering Data</h2>
+                    <p class="day-focus">"Become a data detective - Find exactly what you're looking for"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Select specific columns from a dataset</li>
+                        <li>Filter rows based on conditions</li>
+                        <li>Sort data by different statistics</li>
+                        <li>Find specific players or teams</li>
+                        <li>Combine multiple filters for complex queries</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>Same NBA dataset from Day 1</li>
+                        <li>Google Colab notebooks</li>
+                        <li>Projector for demonstrations</li>
+                        <li>Handout: "Pandas Filtering Cheat Sheet"</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: Quick Review & Setup</div>
+                        <div class="time-badge">10 minutes</div>
+                    </div>
+                    
+                    <p><strong>Review Game (5 minutes):</strong></p>
+                    
+                    <p>Ask students rapid-fire questions:</p>
+                    <ul>
+                        <li>"What does CSV stand for?" (Comma-Separated Values)</li>
+                        <li>"What library do we use for data?" (Pandas)</li>
+                        <li>"Command to see first 5 rows?" (data.head())</li>
+                        <li>"Command to see column names?" (data.columns)</li>
+                    </ul>
+                    
+                    <p><strong>Load the Data (5 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Import pandas</span>
+import pandas as pd
+
+<span class="code-comment"># Load NBA data</span>
+data = pd.read_csv("nba_stats.csv")
+
+<span class="code-comment"># Quick check</span>
+print(data.head())
+                    </div>
+                    
+                    <div class="instructor-note">
+                        Make sure everyone successfully loads the data before moving on. This is the foundation for everything else today.
+                    </div>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: Selecting Columns</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>The Problem (3 minutes):</strong></p>
+                    
+                    <p>"Our dataset has 25 columns. That's a lot! Sometimes we only want to see a few specific stats."</p>
+                    
+                    <div class="key-concept">
+                        <strong>Solution:</strong> We can select just the columns we care about.
+                    </div>
+                    
+                    <p><strong>Single Column Selection (7 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Get just player names</span>
+players = data['Player']
+print(players.head())
+
+<span class="code-comment"># Get just points</span>
+points = data['PTS']
+print(points.head())
+                    </div>
+                    
+                    <p><strong>Explain:</strong></p>
+                    <ul>
+                        <li>Use square brackets with column name in quotes</li>
+                        <li>Returns just that one column</li>
+                        <li>Column name must match exactly (case-sensitive!)</li>
+                    </ul>
+                    
+                    <p><strong>Multiple Column Selection (10 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Get multiple columns - use double brackets!</span>
+key_stats = data[['Player', 'Team', 'PTS', 'REB', 'AST']]
+print(key_stats.head())
+
+<span class="code-comment"># Create a scoring summary</span>
+scoring = data[['Player', 'PTS', 'FG%', '3P%', 'FT%']]
+print(scoring.head(10))
+                    </div>
+                    
+                    <div class="instructor-note">
+                        The double brackets [[]] confuse students. Explain: outer brackets = selection, inner brackets = list of columns. Practice this multiple times.
+                    </div>
+                    
+                    <p><strong>Practice Time (5 minutes):</strong></p>
+                    
+                    <p>Students try:</p>
+                    <ol>
+                        <li>Select just the 'Player' and 'Team' columns</li>
+                        <li>Select 'Player', 'GP' (games played), and 'MIN' (minutes)</li>
+                        <li>Create your own custom selection of 4 columns you find interesting</li>
+                    </ol>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Filtering Rows - Finding What You Want</div>
+                        <div class="time-badge">35 minutes</div>
+                    </div>
+                    
+                    <p><strong>Introduction (5 minutes):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Filtering</strong> = Finding rows that meet specific conditions. Like searching for players who score over 20 points per game.
+                    </div>
+                    
+                    <p><strong>Basic Filtering (10 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Find all players who score over 25 PPG</span>
+high_scorers = data[data['PTS'] > 25]
+print(high_scorers[['Player', 'Team', 'PTS']])
+
+<span class="code-comment"># Find players on the Lakers</span>
+lakers = data[data['Team'] == 'LAL']
+print(lakers[['Player', 'PTS', 'REB', 'AST']])
+
+<span class="code-comment"># Find players with over 10 rebounds per game</span>
+rebounders = data[data['REB'] > 10]
+print(rebounders[['Player', 'Team', 'REB']])
+                    </div>
+                    
+                    <p><strong>Comparison Operators:</strong></p>
+                    <ul>
+                        <li><code>></code> greater than</li>
+                        <li><code><</code> less than</li>
+                        <li><code>>=</code> greater than or equal</li>
+                        <li><code><=</code> less than or equal</li>
+                        <li><code>==</code> equal to (note: TWO equals signs!)</li>
+                        <li><code>!=</code> not equal to</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Common mistake: Using = instead of == for comparison. Emphasize that = assigns a value, == checks if values are equal.
+                    </div>
+                    
+                    <p><strong>Multiple Conditions (10 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Find players who score over 20 AND grab over 8 rebounds</span>
+all_around = data[(data['PTS'] > 20) & (data['REB'] > 8)]
+print(all_around[['Player', 'PTS', 'REB']])
+
+<span class="code-comment"># Find players who score over 30 OR assist over 10</span>
+elite = data[(data['PTS'] > 30) | (data['AST'] > 10)]
+print(elite[['Player', 'PTS', 'AST']])
+
+<span class="code-comment"># Find Lakers players who score over 15</span>
+lakers_scorers = data[(data['Team'] == 'LAL') & (data['PTS'] > 15)]
+print(lakers_scorers[['Player', 'PTS']])
+                    </div>
+                    
+                    <p><strong>Important Symbols:</strong></p>
+                    <ul>
+                        <li><code>&</code> = AND (both conditions must be true)</li>
+                        <li><code>|</code> = OR (at least one condition must be true)</li>
+                        <li>Always use parentheses around each condition!</li>
+                    </ul>
+                    
+                    <p><strong>Guided Practice (10 minutes):</strong></p>
+                    
+                    <p>Students work on these challenges:</p>
+                    <ol>
+                        <li>Find all players who average over 5 assists</li>
+                        <li>Find players on your favorite team</li>
+                        <li>Find players who play over 30 minutes per game</li>
+                        <li>Find players who score over 20 AND assist over 5</li>
+                        <li>Find efficient scorers: over 20 PPG AND shooting over 50% FG</li>
+                    </ol>
+                    
+                    <div class="instructor-note">
+                        Circulate and help students. This is challenging! Encourage them to try, make mistakes, and debug together.
+                    </div>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Sorting Data</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Why Sort? (3 minutes):</strong></p>
+                    
+                    <p>"We want to see the TOP scorers, the BEST rebounders, the MOST efficient shooters. Sorting helps us rank players!"</p>
+                    
+                    <p><strong>Basic Sorting (12 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Sort by points (lowest to highest)</span>
+sorted_pts = data.sort_values('PTS')
+print(sorted_pts[['Player', 'PTS']].head())
+
+<span class="code-comment"># Sort by points (highest to lowest)</span>
+top_scorers = data.sort_values('PTS', ascending=False)
+print(top_scorers[['Player', 'Team', 'PTS']].head(10))
+
+<span class="code-comment"># Top 10 rebounders</span>
+top_rebounders = data.sort_values('REB', ascending=False)
+print(top_rebounders[['Player', 'REB']].head(10))
+
+<span class="code-comment"># Best assist leaders</span>
+top_assists = data.sort_values('AST', ascending=False)
+print(top_assists[['Player', 'Team', 'AST']].head(10))
+                    </div>
+                    
+                    <p><strong>Key Points:</strong></p>
+                    <ul>
+                        <li><code>sort_values()</code> arranges rows by a column</li>
+                        <li><code>ascending=False</code> gives you highest to lowest (best to worst)</li>
+                        <li><code>.head(10)</code> shows top 10</li>
+                    </ul>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Quick Challenge:</strong> "Find the top 5 players in ANY stat you choose. Share who they are!"
+                    </div>
+                </div>
+                
+                <!-- Activity 5 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 5: Putting It All Together</div>
+                        <div class="time-badge">10 minutes</div>
+                    </div>
+                    
+                    <p><strong>Complex Query Example:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Find top 10 scorers who play for Western Conference teams</span>
+<span class="code-comment"># (simplified - assuming we have conference data)</span>
+
+west_teams = ['LAL', 'GSW', 'PHX', 'DEN', 'LAC']
+west_players = data[data['Team'].isin(west_teams)]
+top_west_scorers = west_players.sort_values('PTS', ascending=False)
+print(top_west_scorers[['Player', 'Team', 'PTS']].head(10))
+                    </div>
+                    
+                    <p><strong>Break Down the Process:</strong></p>
+                    <ol>
+                        <li>Filter for Western Conference teams</li>
+                        <li>Sort by points</li>
+                        <li>Take top 10</li>
+                        <li>Display key columns</li>
+                    </ol>
+                    
+                    <p><strong>Student Challenge:</strong></p>
+                    
+                    <p>"Create your own analysis combining filtering, sorting, and column selection. Examples:</p>
+                    <ul>
+                        <li>Top 5 most efficient shooters (high FG%) who play over 30 minutes</li>
+                        <li>Best rebounders on a specific team</li>
+                        <li>Players who average a double-double (10+ points AND 10+ rebounds)</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 6 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 6: Wrap-Up & Celebration</div>
+                        <div class="time-badge">10 minutes</div>
+                    </div>
+                    
+                    <p><strong>Today's Superpowers (5 minutes):</strong></p>
+                    
+                    <ul>
+                        <li>✅ Select specific columns</li>
+                        <li>✅ Filter for players who meet conditions</li>
+                        <li>✅ Use multiple conditions (AND/OR)</li>
+                        <li>✅ Sort to find the best</li>
+                        <li>✅ Combine techniques for complex queries</li>
+                    </ul>
+                    
+                    <div class="key-concept">
+                        <strong>Reality Check:</strong> "You can now analyze datasets like professional sports analysts! These are the EXACT techniques they use to scout players and build strategies."
+                    </div>
+                    
+                    <p><strong>Gallery Walk (3 minutes):</strong></p>
+                    
+                    <p>2-3 volunteers share their custom analysis on the projector. Class gives feedback and asks questions.</p>
+                    
+                    <p><strong>Preview Week 3 (2 minutes):</strong></p>
+                    
+                    <p>"Next week, we'll take it even further:</p>
+                    <ul>
+                        <li>Create our own calculated columns (like points per minute)</li>
+                        <li>Group data by teams</li>
+                        <li>Make our FIRST visualizations - charts and graphs!</li>
+                    </ul>
+                    <p>Get ready to see your data come to life!"</p>
+                </div>
+                
+                <div class="homework">
+                    <h4>📝 Homework Challenge</h4>
+                    <ul>
+                        <li><strong>Mini-Report:</strong> Pick one question about NBA players that interests you. Use filtering, sorting, and selection to answer it. Write 3-5 sentences explaining what you found.</li>
+                        <li><strong>Examples:</strong>
+                            <ul>
+                                <li>Who are the most underrated players? (high stats, not on famous teams)</li>
+                                <li>Which team has the best shooting?</li>
+                                <li>Who are the most well-rounded players?</li>
+                            </ul>
+                        </li>
+                        <li>Save your code and results - you'll share next week!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Week 2 Complete! 🎉</strong></p>
+            <p>Students can now load, explore, filter, and sort real sports datasets.</p>
+            <p>Next week: Calculations, grouping, and data visualization!</p>
+        </footer>
+    </div>
+</body>
+</html>

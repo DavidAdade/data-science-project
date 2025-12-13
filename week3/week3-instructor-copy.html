@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3: Calculations & Visualizations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .program-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            margin: 30px;
+        }
+        
+        .program-info h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #764ba2;
+        }
+        
+        .info-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .day-section {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: -30px -30px 25px -30px;
+        }
+        
+        .day-header h2 {
+            font-size: 1.8em;
+        }
+        
+        .day-header .day-focus {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .objectives {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .objectives h4 {
+            color: #1565C0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .objectives ul {
+            margin-left: 20px;
+        }
+        
+        .objectives li {
+            margin-bottom: 8px;
+        }
+        
+        .materials {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .materials h4 {
+            color: #e65100;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .activity {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .activity-title {
+            font-size: 1.3em;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+        
+        .time-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .discussion-prompt {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .discussion-prompt strong {
+            color: #2e7d32;
+        }
+        
+        .instructor-note {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        
+        .instructor-note::before {
+            content: "👨‍🏫 Instructor Note: ";
+            font-weight: bold;
+            color: #f57f17;
+        }
+        
+        .key-concept {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .key-concept strong {
+            color: #6a1b9a;
+        }
+        
+        .homework {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .homework h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+        }
+        
+        ul {
+            margin-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .tip-box {
+            background: #e1f5fe;
+            border: 2px dashed #0288d1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box::before {
+            content: "💡 Pro Tip: ";
+            font-weight: bold;
+            color: #01579b;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 Week 3: Calculations & Visualizations 📊</h1>
+            <p class="subtitle">Creating New Metrics and Seeing Your Data</p>
+        </header>
+        
+        <div class="program-info">
+            <h3>Week 3 Overview</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Focus</strong>
+                    Creating calculated columns and visualizing data
+                </div>
+                <div class="info-item">
+                    <strong>New Skills</strong>
+                    Math operations on columns, creating charts
+                </div>
+                <div class="info-item">
+                    <strong>Tools</strong>
+                    Pandas calculations, Matplotlib for charts
+                </div>
+                <div class="info-item">
+                    <strong>Output</strong>
+                    Custom metrics and visual graphs
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- DAY 1 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 1 (Session 5): Creating Calculated Columns</h2>
+                    <p class="day-focus">"Create your own advanced stats like the pros"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand why calculated columns are powerful</li>
+                        <li>Perform math operations on entire columns at once</li>
+                        <li>Create new metrics (efficiency, per-minute stats, ratios)</li>
+                        <li>Add calculated columns to the dataset</li>
+                        <li>Use new columns for advanced filtering and analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>NBA dataset from Week 2</li>
+                        <li>Google Colab notebooks</li>
+                        <li>Projector for demonstrations</li>
+                        <li>Examples of advanced NBA metrics (PER, TS%, etc.)</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: Why Advanced Stats Matter</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Opening Hook (8 minutes):</strong></p>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Question:</strong> "Two players both score 20 points. Player A plays 40 minutes. Player B plays 25 minutes. Who's more efficient?"
+                    </div>
+                    
+                    <p><strong>The Problem with Basic Stats:</strong></p>
+                    <ul>
+                        <li>Points alone don't tell the full story</li>
+                        <li>Need to account for minutes played</li>
+                        <li>Need to consider shooting efficiency</li>
+                        <li>NBA teams use DOZENS of advanced metrics</li>
+                    </ul>
+                    
+                    <div class="key-concept">
+                        <strong>Advanced Stats Examples:</strong>
+                        <ul>
+                            <li><strong>Points Per Minute:</strong> How efficient is a player's scoring?</li>
+                            <li><strong>True Shooting %:</strong> Accounts for 3-pointers and free throws</li>
+                            <li><strong>Usage Rate:</strong> How much does a team rely on this player?</li>
+                            <li><strong>Plus/Minus:</strong> Point differential when player is on court</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Real Example (5 minutes):</strong></p>
+                    
+                    <p>Show comparison on screen:</p>
+                    <ul>
+                        <li><strong>Player A:</strong> 25 PPG, 45% FG, plays 38 minutes</li>
+                        <li><strong>Player B:</strong> 22 PPG, 52% FG, plays 28 minutes</li>
+                    </ul>
+                    
+                    <p>"Who's better? We need to calculate <strong>Points Per Minute</strong> to really know!"</p>
+                    
+                    <ul>
+                        <li>Player A: 25 ÷ 38 = 0.658 PPM</li>
+                        <li>Player B: 22 ÷ 28 = 0.786 PPM ← More efficient!</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        This shows students that basic stats can be misleading. Advanced calculations reveal deeper truths about performance.
+                    </div>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: Math on Entire Columns</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>The Power of Pandas (5 minutes):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Amazing Feature:</strong> You can do math on ENTIRE columns at once. No loops needed!
+                    </div>
+                    
+                    <p><strong>First Example Together (15 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Load our data</span>
+import pandas as pd
+data = pd.read_csv("nba_stats.csv")
+
+<span class="code-comment"># Look at points and minutes columns</span>
+print(data[['Player', 'PTS', 'MIN']].head())
+
+<span class="code-comment"># Calculate points per minute for EVERYONE at once!</span>
+data['PPM'] = data['PTS'] / data['MIN']
+
+<span class="code-comment"># See the new column</span>
+print(data[['Player', 'PTS', 'MIN', 'PPM']].head())
+</div>
+                    
+                    <p><strong>What Just Happened:</strong></p>
+                    <ol>
+                        <li>We divided the entire PTS column by the entire MIN column</li>
+                        <li>Pandas did the math for ALL 450 players instantly</li>
+                        <li>We created a NEW column called 'PPM'</li>
+                        <li>Now it's permanently part of our dataset!</li>
+                    </ol>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Check for Understanding:</strong> "How long would it take to calculate PPM for 450 players by hand? How long did it take us with code?" (Answer: Hours vs. 1 second!)
+                    </div>
+                    
+                    <p><strong>More Examples:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Rebounds per game</span>
+data['RPG'] = data['REB'] / data['GP']
+
+<span class="code-comment"># Assists per game</span>
+data['APG'] = data['AST'] / data['GP']
+
+<span class="code-comment"># Points per shot attempt</span>
+data['PTS_per_FGA'] = data['PTS'] / data['FGA']
+
+<span class="code-comment"># See all our new stats</span>
+print(data[['Player', 'PPM', 'RPG', 'APG']].head(10))
+</div>
+                    
+                    <div class="tip-box">
+                        Encourage students to think creatively: "What other stats could we calculate? Steals per minute? Blocks per game? Three-pointers per game?"
+                    </div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Creating Advanced Metrics</div>
+                        <div class="time-badge">30 minutes</div>
+                    </div>
+                    
+                    <p><strong>Efficiency Ratings (12 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># True Shooting Percentage</span>
+<span class="code-comment"># Accounts for 2-pointers, 3-pointers, and free throws</span>
+data['TS%'] = data['PTS'] / (2 * (data['FGA'] + 0.44 * data['FTA']))
+
+<span class="code-comment"># Usage Rate - what % of plays involve this player</span>
+data['USG%'] = 100 * ((data['FGA'] + 0.44 * data['FTA'] + data['TOV']) / data['MIN'])
+
+<span class="code-comment"># Assist to Turnover Ratio</span>
+data['AST_TO_Ratio'] = data['AST'] / data['TOV']
+</div>
+                    
+                    <p><strong>Explain Each Metric:</strong></p>
+                    
+                    <p><strong>True Shooting %:</strong></p>
+                    <ul>
+                        <li>Better than regular FG% because it counts 3-pointers as more valuable</li>
+                        <li>Accounts for free throws too</li>
+                        <li>NBA teams use this instead of FG%</li>
+                    </ul>
+                    
+                    <p><strong>Usage Rate:</strong></p>
+                    <ul>
+                        <li>How much does the offense run through this player?</li>
+                        <li>High usage = team relies on them heavily</li>
+                        <li>Helps understand a player's role</li>
+                    </ul>
+                    
+                    <p><strong>Assist/Turnover Ratio:</strong></p>
+                    <ul>
+                        <li>For every turnover, how many assists do they get?</li>
+                        <li>Higher = better decision maker</li>
+                        <li>Great for evaluating point guards</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Some students might struggle with complex formulas. Reassure them that understanding WHAT the metric means is more important than memorizing the formula. Professional analysts have these formulas saved as templates.
+                    </div>
+                    
+                    <p><strong>Find the Leaders (10 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Who has the best True Shooting %?</span>
+top_efficiency = data.sort_values('TS%', ascending=False)
+print(top_efficiency[['Player', 'PTS', 'TS%']].head(10))
+
+<span class="code-comment"># Who has the highest usage rate?</span>
+top_usage = data.sort_values('USG%', ascending=False)
+print(top_usage[['Player', 'USG%', 'PTS']].head(10))
+
+<span class="code-comment"># Best assist/turnover ratios</span>
+best_decision_makers = data.sort_values('AST_TO_Ratio', ascending=False)
+print(best_decision_makers[['Player', 'AST', 'TOV', 'AST_TO_Ratio']].head(10))
+</div>
+                    
+                    <p><strong>Guided Practice (8 minutes):</strong></p>
+                    
+                    <p>Students create their own metrics:</p>
+                    <ol>
+                        <li>Blocks per game</li>
+                        <li>Steals per game</li>
+                        <li>Three-pointers per game</li>
+                        <li>Minutes per game</li>
+                        <li>One creative metric of their choice</li>
+                    </ol>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Using Calculated Columns for Analysis</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>Now We Can Ask Better Questions (15 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Find efficient scorers (high PPM, high TS%)</span>
+efficient = data[(data['PPM'] > 0.6) & (data['TS%'] > 0.60)]
+print(efficient[['Player', 'PPM', 'TS%', 'PTS']].head())
+
+<span class="code-comment"># Find high-usage players who are still efficient</span>
+superstars = data[(data['USG%'] > 25) & (data['TS%'] > 0.55)]
+print(superstars[['Player', 'USG%', 'TS%', 'PTS']].head())
+
+<span class="code-comment"># Find point guards with great decision making</span>
+elite_pgs = data[(data['AST_TO_Ratio'] > 3) & (data['APG'] > 5)]
+print(elite_pgs[['Player', 'APG', 'AST_TO_Ratio']].head())
+
+<span class="code-comment"># Who gets the most rebounds per minute?</span>
+rebound_machines = data.sort_values('RPG', ascending=False)
+print(rebound_machines[['Player', 'REB', 'MIN', 'RPG']].head(10))
+</div>
+                    
+                    <p><strong>Complex Analysis Example:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Find undervalued players</span>
+<span class="code-comment"># High efficiency but low minutes (could play more!)</span>
+undervalued = data[(data['TS%'] > 0.58) & (data['MIN'] < 25)]
+undervalued_sorted = undervalued.sort_values('TS%', ascending=False)
+print(undervalued_sorted[['Player', 'Team', 'MIN', 'PTS', 'TS%']].head())
+</div>
+                    
+                    <p><strong>Student Challenge (5 minutes):</strong></p>
+                    
+                    <p>Create an analysis that answers ONE of these questions:</p>
+                    <ul>
+                        <li>Who are the most efficient bench players?</li>
+                        <li>Which high-minute players need rest? (high MIN, declining efficiency)</li>
+                        <li>Who are the best shooters who don't take many shots?</li>
+                        <li>Your own interesting question!</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 5 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 5: Saving Your Work</div>
+                        <div class="time-badge">5 minutes</div>
+                    </div>
+                    
+                    <p><strong>Export Your Enhanced Dataset:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Save the dataset with all our new columns</span>
+data.to_csv("nba_stats_advanced.csv", index=False)
+
+<span class="code-comment"># Save just the key metrics</span>
+key_metrics = data[['Player', 'Team', 'PTS', 'PPM', 'TS%', 'USG%', 'RPG', 'APG']]
+key_metrics.to_csv("nba_key_metrics.csv", index=False)
+</div>
+                    
+                    <p><strong>Why Save?</strong></p>
+                    <ul>
+                        <li>Don't have to recalculate every time</li>
+                        <li>Can share with others</li>
+                        <li>Can open in Excel/Google Sheets</li>
+                        <li>Ready for next session's visualizations!</li>
+                    </ul>
+                </div>
+                
+                <div class="homework">
+                    <h4>📝 Homework Challenge</h4>
+                    <ul>
+                        <li><strong>Create 3 Custom Metrics:</strong> Think of 3 stats that would be interesting for YOUR favorite sport or position</li>
+                        <li><strong>Find the Leaders:</strong> Calculate them and find the top 10 players in each</li>
+                        <li><strong>Write Analysis:</strong> 3-4 sentences explaining what you learned from your new metrics</li>
+                        <li><strong>Bonus:</strong> Try to find an "underrated" player using advanced stats</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- DAY 2 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 2 (Session 6): Data Visualization</h2>
+                    <p class="day-focus">"Make your data come alive with charts and graphs"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand why visualization is crucial for analysis</li>
+                        <li>Create bar charts to compare players/teams</li>
+                        <li>Create scatter plots to show relationships</li>
+                        <li>Customize charts with titles, labels, and colors</li>
+                        <li>Choose the right chart type for different questions</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>Enhanced NBA dataset from Day 1</li>
+                        <li>Google Colab with matplotlib</li>
+                        <li>Examples of good/bad data visualizations</li>
+                        <li>Projector for displaying charts</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: Why Visualize?</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Show vs. Tell (10 minutes):</strong></p>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Question:</strong> "I tell you Steph Curry scored 29, 31, 27, 33, 30, 28, 32 points in 7 games. Can you quickly tell me if he's consistent or streaky?"
+                    </div>
+                    
+                    <p>Hard to tell from numbers alone!</p>
+                    
+                    <p><strong>Now show a line graph of those same numbers.</strong></p>
+                    
+                    <p>"NOW can you tell? Way easier, right?"</p>
+                    
+                    <div class="key-concept">
+                        <strong>Why Visualize:</strong>
+                        <ul>
+                            <li>Human brain processes images 60,000x faster than text</li>
+                            <li>Patterns jump out immediately</li>
+                            <li>Easier to communicate findings to others</li>
+                            <li>NBA teams show coaches charts, not spreadsheets</li>
+                            <li>Every data analyst needs visualization skills</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Chart Types Preview (5 minutes):</strong></p>
+                    
+                    <p>Show examples of each:</p>
+                    <ul>
+                        <li><strong>Bar Chart:</strong> Compare quantities (top scorers)</li>
+                        <li><strong>Line Chart:</strong> Show trends over time (points per game this season)</li>
+                        <li><strong>Scatter Plot:</strong> Show relationships (points vs. shooting %)</li>
+                        <li><strong>Pie Chart:</strong> Show proportions (team's scoring distribution)</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: Your First Bar Chart</div>
+                        <div class="time-badge">25 minutes</div>
+                    </div>
+                    
+                    <p><strong>Setup Matplotlib (5 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Import the visualization library</span>
+import matplotlib.pyplot as plt
+
+<span class="code-comment"># Load our data</span>
+import pandas as pd
+data = pd.read_csv("nba_stats_advanced.csv")
+</div>
+                    
+                    <div class="key-concept">
+                        <strong>Matplotlib</strong> = Python's most popular charting library. It's like having a professional graphics designer in your code!
+                    </div>
+                    
+                    <p><strong>Create Top 10 Scorers Chart (15 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Step 1: Get top 10 scorers</span>
+top_scorers = data.sort_values('PTS', ascending=False).head(10)
+
+<span class="code-comment"># Step 2: Create the bar chart</span>
+plt.figure(figsize=(12, 6))
+plt.bar(top_scorers['Player'], top_scorers['PTS'], color='blue')
+
+<span class="code-comment"># Step 3: Add labels and title</span>
+plt.xlabel('Player', fontsize=12)
+plt.ylabel('Points Per Game', fontsize=12)
+plt.title('Top 10 NBA Scorers', fontsize=16, fontweight='bold')
+
+<span class="code-comment"># Step 4: Rotate x-axis labels so names don't overlap</span>
+plt.xticks(rotation=45, ha='right')
+
+<span class="code-comment"># Step 5: Display the chart</span>
+plt.tight_layout()
+plt.show()
+</div>
+                    
+                    <p><strong>Break Down Each Step:</strong></p>
+                    <ol>
+                        <li><code>plt.figure(figsize=(12,6))</code> = Set chart size (width, height)</li>
+                        <li><code>plt.bar()</code> = Create the bars (x-axis data, y-axis data, color)</li>
+                        <li><code>plt.xlabel/ylabel/title()</code> = Label your chart</li>
+                        <li><code>plt.xticks(rotation=45)</code> = Angle the player names</li>
+                        <li><code>plt.show()</code> = Display the finished chart</li>
+                    </ol>
+                    
+                    <div class="instructor-note">
+                        This might be the most visually exciting moment of the course so far! Make sure everyone successfully creates their first chart. Take screenshots!
+                    </div>
+                    
+                    <p><strong>Customize Colors (5 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Try different colors</span>
+plt.bar(top_scorers['Player'], top_scorers['PTS'], color='red')
+
+<span class="code-comment"># Use a color per bar</span>
+colors = ['gold', 'silver', 'brown', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue']
+plt.bar(top_scorers['Player'], top_scorers['PTS'], color=colors)
+
+<span class="code-comment"># Use gradients</span>
+plt.bar(top_scorers['Player'], top_scorers['PTS'], color='skyblue', edgecolor='darkblue', linewidth=2)
+</div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Scatter Plots - Finding Relationships</div>
+                        <div class="time-badge">25 minutes</div>
+                    </div>
+                    
+                    <p><strong>What are Scatter Plots? (5 minutes):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Scatter Plot:</strong> Shows relationship between TWO variables. Each dot = one player. Helps answer: "As X increases, what happens to Y?"
+                    </div>
+                    
+                    <p><strong>Example Questions:</strong></p>
+                    <ul>
+                        <li>Do players who shoot more score more?</li>
+                        <li>Is there a relationship between minutes and points?</li>
+                        <li>Do efficient shooters also get more assists?</li>
+                    </ul>
+                    
+                    <p><strong>Create Points vs. Shooting % Scatter Plot (15 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Clean data - remove any missing values</span>
+clean_data = data.dropna(subset=['PTS', 'FG%'])
+
+<span class="code-comment"># Create scatter plot</span>
+plt.figure(figsize=(10, 6))
+plt.scatter(clean_data['FG%'], clean_data['PTS'], alpha=0.6, s=50, color='purple')
+
+<span class="code-comment"># Labels and title</span>
+plt.xlabel('Field Goal Percentage (FG%)', fontsize=12)
+plt.ylabel('Points Per Game', fontsize=12)
+plt.title('Scoring vs. Shooting Efficiency', fontsize=16, fontweight='bold')
+
+<span class="code-comment"># Add grid for easier reading</span>
+plt.grid(True, alpha=0.3)
+
+plt.show()
+</div>
+                    
+                    <p><strong>Reading the Chart:</strong></p>
+                    <ul>
+                        <li>Each dot = one player</li>
+                        <li>Position shows their FG% (x) and PPG (y)</li>
+                        <li>Dots in upper-right = high scoring + efficient (best!)</li>
+                        <li>Dots in lower-left = low scoring + inefficient</li>
+                        <li>Is there a pattern? Does better shooting = more points?</li>
+                    </ul>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Analyze Together:</strong> "What pattern do you see? Is there a relationship between shooting percentage and scoring?"
+                    </div>
+                    
+                    <p><strong>Add Player Labels (5 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Label the top scorers on the scatter plot</span>
+top_5 = clean_data.nlargest(5, 'PTS')
+
+plt.scatter(clean_data['FG%'], clean_data['PTS'], alpha=0.5, s=50, color='lightblue')
+plt.scatter(top_5['FG%'], top_5['PTS'], s=100, color='red', label='Top 5 Scorers')
+
+<span class="code-comment"># Add names next to top 5</span>
+for idx, row in top_5.iterrows():
+    plt.text(row['FG%'], row['PTS'], row['Player'], fontsize=9)
+
+plt.xlabel('Field Goal %')
+plt.ylabel('Points Per Game')
+plt.title('Scoring vs. Efficiency (Top 5 Highlighted)')
+plt.legend()
+plt.show()
+</div>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Comparing Teams</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>Group Data by Team (15 minutes):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Calculate average points per team</span>
+team_avg = data.groupby('Team')['PTS'].mean().sort_values(ascending=False)
+
+<span class="code-comment"># Get top 10 scoring teams</span>
+top_teams = team_avg.head(10)
+
+<span class="code-comment"># Create horizontal bar chart</span>
+plt.figure(figsize=(10, 6))
+plt.barh(top_teams.index, top_teams.values, color='green')
+
+plt.xlabel('Average Points Per Game', fontsize=12)
+plt.ylabel('Team', fontsize=12)
+plt.title('Top 10 Highest Scoring Teams', fontsize=16, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+</div>
+                    
+                    <p><strong>What's New Here:</strong></p>
+                    <ul>
+                        <li><code>groupby('Team')</code> = Group all players by their team</li>
+                        <li><code>['PTS'].mean()</code> = Calculate average points for each team</li>
+                        <li><code>plt.barh()</code> = Horizontal bar chart (easier to read team names)</li>
+                    </ul>
+                    
+                    <p><strong>Student Challenge (5 minutes):</strong></p>
+                    
+                    <p>Create a chart showing:</p>
+                    <ul>
+                        <li>Teams with highest average rebounds, OR</li>
+                        <li>Teams with highest average assists, OR</li>
+                        <li>Your own team comparison</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 5 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 5: Student Mini-Projects</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>Create Your Own Visualization (15 minutes):</strong></p>
+                    
+                    <p>Students choose ONE to create:</p>
+                    
+                    <p><strong>Option 1: Bar Chart</strong></p>
+                    <ul>
+                        <li>Top 10 in any stat (rebounds, assists, steals, blocks, etc.)</li>
+                        <li>Compare your favorite team's players</li>
+                        <li>Best bench players (low minutes but high efficiency)</li>
+                    </ul>
+                    
+                    <p><strong>Option 2: Scatter Plot</strong></p>
+                    <ul>
+                        <li>Minutes vs. Points (do more minutes = more scoring?)</li>
+                        <li>Assists vs. Turnovers (decision-making quality)</li>
+                        <li>Height vs. Rebounds (if you have height data)</li>
+                        <li>Your own interesting comparison</li>
+                    </ul>
+                    
+                    <p><strong>Option 3: Team Comparison</strong></p>
+                    <ul>
+                        <li>Compare all teams on any metric</li>
+                        <li>Best defensive teams (steals + blocks)</li>
+                        <li>Most balanced teams (points + assists + rebounds)</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        Remind students: Make it INTERESTING! Choose something YOU care about. Add good titles and labels. Use colors that look good.
+                    </div>
+                    
+                    <p><strong>Gallery Walk (5 minutes):</strong></p>
+                    
+                    <ul>
+                        <li>Students display their charts on screens</li>
+                        <li>Walk around and view each other's work</li>
+                        <li>3-4 students present theirs to the class</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 6 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 6: Week 3 Wrap-Up</div>
+                        <div class="time-badge">5 minutes</div>
+                    </div>
+                    
+                    <p><strong>What You've Mastered:</strong></p>
+                    
+                    <ul>
+                        <li>✅ Created advanced calculated columns</li>
+                        <li>✅ Built efficiency metrics like the pros</li>
+                        <li>✅ Made bar charts to compare players</li>
+                        <li>✅ Created scatter plots to find relationships</li>
+                        <li>✅ Grouped and visualized team data</li>
+                    </ul>
+                    
+                    <div class="key-concept">
+                        <strong>You're Now Doing Real Data Analysis:</strong> Everything you learned this week is what professional sports analysts do daily. These aren't "practice" skills - these are THE skills.
+                    </div>
+                    
+                    <p><strong>Looking Ahead:</strong></p>
+                    <p>Next week: More advanced visualizations, comparing multiple players at once, and starting to build full analysis reports!</p>
+                </div>
+                
+                <div class="homework">
+                    <h4>📝 Final Project Preview</h4>
+                    <ul>
+                        <li><strong>Start Thinking:</strong> What question do you want to answer about NBA players?</li>
+                        <li><strong>Examples:</strong>
+                            <ul>
+                                <li>Who's the most underrated player in the league?</li>
+                                <li>Which young player has the best future?</li>
+                                <li>What makes a championship team?</li>
+                                <li>Best value players (high performance, low salary if you have that data)</li>
+                            </ul>
+                        </li>
+                        <li>You'll answer your question using everything you've learned: filtering, calculations, and visualizations!</li>
+                        <li>Write down 2-3 question ideas to discuss next class</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Week 3 Complete! 🎉</strong></p>
+            <p>Students can now create advanced metrics and visualize data like professional analysts.</p>
+            <p>Next: Advanced visualizations and project work!</p>
+        </footer>
+    </div>
+</body>
+</html>

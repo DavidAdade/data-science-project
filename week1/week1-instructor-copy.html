@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1: Introduction to Sports Data Analytics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;v
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .program-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            margin: 30px;
+        }
+        
+        .program-info h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #764ba2;
+        }
+        
+        .info-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .day-section {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: -30px -30px 25px -30px;
+        }
+        
+        .day-header h2 {
+            font-size: 1.8em;
+        }
+        
+        .day-header .day-focus {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .objectives {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .objectives h4 {
+            color: #1565C0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .objectives ul {
+            margin-left: 20px;
+        }
+        
+        .objectives li {
+            margin-bottom: 8px;
+        }
+        
+        .materials {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .materials h4 {
+            color: #e65100;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .activity {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .activity-title {
+            font-size: 1.3em;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+        
+        .time-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .discussion-prompt {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .discussion-prompt strong {
+            color: #2e7d32;
+        }
+        
+        .instructor-note {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        
+        .instructor-note::before {
+            content: "👨‍🏫 Instructor Note: ";
+            font-weight: bold;
+            color: #f57f17;
+        }
+        
+        .key-concept {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .key-concept strong {
+            color: #6a1b9a;
+        }
+        
+        .homework {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .homework h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+        }
+        
+        ul {
+            margin-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .tip-box {
+            background: #e1f5fe;
+            border: 2px dashed #0288d1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box::before {
+            content: "💡 Pro Tip: ";
+            font-weight: bold;
+            color: #01579b;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏀 Week 1: Welcome to Sports Data Analytics 📊</h1>
+            <p class="subtitle">From Athletes to Analysts: Your Journey Begins</p>
+        </header>
+        
+        <div class="program-info">
+            <h3>Program Overview</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Target Audience</strong>
+                    High school athletes with zero coding experience
+                </div>
+                <div class="info-item">
+                    <strong>Duration</strong>
+                    6 weeks, 2 sessions per week (1.5 hours each)
+                </div>
+                <div class="info-item">
+                    <strong>Tools</strong>
+                    Google Colab (free, browser-based)
+                </div>
+                <div class="info-item">
+                    <strong>Philosophy</strong>
+                    Sports first, code second
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- DAY 1 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 1 (Session 1): The Numbers Game</h2>
+                    <p class="day-focus">"Every athlete is a data point – let's decode yours"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand what sports data analytics is and why it matters</li>
+                        <li>See real-world examples of how pro teams use data to win</li>
+                        <li>Get comfortable with Google Colab environment</li>
+                        <li>Connect personal sports experience to data analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>Laptops/Chromebooks with internet access (one per student)</li>
+                        <li>Projector/screen for demonstrations</li>
+                        <li>Video clips prepared (see Activity 1)</li>
+                        <li>Chart paper and markers</li>
+                        <li>Printed handout: "What is Data Analytics?" (optional)</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: The Power of Numbers in Sports</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Opening Question:</strong> "Who here tracks their stats in their sport? What do you track?"
+                    </div>
+                    
+                    <p><strong>Video Examples to Show (5-7 minutes total):</strong></p>
+                    <ul>
+                        <li><strong>NBA:</strong> How the Golden State Warriors used analytics to revolutionize the 3-point shot</li>
+                        <li><strong>Soccer:</strong> How Liverpool FC tracks player running distance and fatigue to prevent injuries</li>
+                        <li><strong>Hockey:</strong> How the Toronto Maple Leafs analyze shot quality, not just shot quantity</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Search YouTube for: "Moneyball sports analytics," "NBA analytics revolution," or "sports data science." Keep videos under 2-3 minutes each. Focus on visuals showing graphs, charts, and real impact.
+                    </div>
+                    
+                    <p><strong>Discussion Questions (10 minutes):</strong></p>
+                    <ol>
+                        <li>"What surprised you about how teams use numbers?"</li>
+                        <li>"What stats matter most in YOUR sport?"</li>
+                        <li>"If you could track one thing about your performance, what would it be?"</li>
+                    </ol>
+                    
+                    <div class="key-concept">
+                        <strong>Key Message:</strong> "Every time you play, you generate data. Pro athletes use that data to get better. Today, YOU start learning how to do the same."
+                    </div>
+                    
+                    <p><strong>Whiteboard Activity (5 minutes):</strong></p>
+                    <p>Create three columns: "Sport" | "What We Track Now" | "What We COULD Track"</p>
+                    <p>Students call out ideas, instructor writes them down. Examples:</p>
+                    <ul>
+                        <li>Basketball: Points, rebounds → Shot accuracy by location, defensive stops</li>
+                        <li>Soccer: Goals → Passes completed, distance covered per game</li>
+                        <li>Track: Times → Improvement rate, correlation between practice types and race performance</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: What IS Data Analytics?</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Simple Definition (on projector):</strong></p>
+                    <div class="key-concept">
+                        <strong>Data Analytics =</strong> Using numbers and patterns to make better decisions
+                    </div>
+                    
+                    <p><strong>Break It Down:</strong></p>
+                    <ol>
+                        <li><strong>Collect:</strong> Gather the numbers (stats from games)</li>
+                        <li><strong>Analyze:</strong> Look for patterns (what works? what doesn't?)</li>
+                        <li><strong>Decide:</strong> Make smarter choices (change strategy, improve training)</li>
+                    </ol>
+                    
+                    <p><strong>Real Sports Example Walkthrough (8 minutes):</strong></p>
+                    
+                    <p><em>Scenario: A basketball player wants to improve their scoring</em></p>
+                    
+                    <p><strong>Step 1 - Collect:</strong></p>
+                    <ul>
+                        <li>Track shots taken vs. shots made for 10 games</li>
+                        <li>Record shot location (3-point, mid-range, layup)</li>
+                    </ul>
+                    
+                    <p><strong>Step 2 - Analyze:</strong></p>
+                    <ul>
+                        <li>Notice: 3-point shooting = 25% accuracy</li>
+                        <li>Mid-range = 45% accuracy</li>
+                        <li>Layups = 70% accuracy</li>
+                    </ul>
+                    
+                    <p><strong>Step 3 - Decide:</strong></p>
+                    <ul>
+                        <li>Focus on getting to the basket more</li>
+                        <li>Practice 3-point shots more in training</li>
+                        <li>Maybe avoid mid-range shots for now</li>
+                    </ul>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Turn and Talk (3 minutes):</strong> "Think of a decision you make in your sport. What data could help you make that decision better?"
+                    </div>
+                    
+                    <div class="instructor-note">
+                        Have 2-3 students share their ideas with the whole group. Validate every response and show how it connects to data analytics.
+                    </div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Setting Up Your Analytics Lab</div>
+                        <div class="time-badge">25 minutes</div>
+                    </div>
+                    
+                    <p><strong>Introduction to Google Colab (5 minutes):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Google Colab =</strong> A free, online notebook where you write and run code. No software to install. Works in your web browser just like Google Docs.
+                    </div>
+                    
+                    <p><strong>Step-by-Step Setup (Follow along with students):</strong></p>
+                    
+                    <p><strong>Step 1:</strong> Open a web browser</p>
+                    <p><strong>Step 2:</strong> Go to <strong>colab.research.google.com</strong></p>
+                    <p><strong>Step 3:</strong> Sign in with Google account (school account works)</p>
+                    <p><strong>Step 4:</strong> Click "New Notebook"</p>
+                    
+                    <div class="instructor-note">
+                        Walk around and help students who get stuck. Common issues: not signed into Google, blocked by school firewall (have IT help ready), confused by the interface.
+                    </div>
+                    
+                    <p><strong>Tour of the Interface (5 minutes):</strong></p>
+                    
+                    <p>Point out these key features on the projector:</p>
+                    <ul>
+                        <li><strong>Code Cell:</strong> Where you type your code (looks like a gray box)</li>
+                        <li><strong>Play Button:</strong> Click this to run your code</li>
+                        <li><strong>Output Area:</strong> Where results appear below the code</li>
+                        <li><strong>Notebook Name:</strong> Top left - rename it to "My Sports Analytics"</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        Tell students: "Think of this like a digital notebook. You write instructions (code), press play, and the computer follows your instructions."
+                    </div>
+                    
+                    <p><strong>First Code Ever (10 minutes):</strong></p>
+                    
+                    <p>Tell students: "You're about to write your first line of code. It's going to be simple, and it's going to work. Ready?"</p>
+                    
+                    <p><strong>Type this together (project it on screen):</strong></p>
+                    
+                    <div class="code-block">
+print("Hello, I'm a data analyst!")
+                    </div>
+                    
+                    <p><strong>Instructor says out loud:</strong></p>
+                    <ul>
+                        <li>"Type the word 'print' - this tells the computer to show something"</li>
+                        <li>"Open parentheses ("</li>
+                        <li>"Type quotation marks ""</li>
+                        <li>"Type your message inside the quotes"</li>
+                        <li>"Close quotation marks and parentheses"</li>
+                    </ul>
+                    
+                    <p><strong>Now click the play button (▶️)</strong></p>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Celebrate!</strong> "You just wrote and ran your first line of code! You're officially a programmer."
+                    </div>
+                    
+                    <p><strong>Try These Next (students work independently):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Print your name</span>
+print("My name is Marcus")
+
+<span class="code-comment"># Print your favorite sport</span>
+print("I play basketball")
+
+<span class="code-comment"># Print your position</span>
+print("I'm a point guard")
+                    </div>
+                    
+                    <div class="instructor-note">
+                        The # symbol creates a "comment" - notes to explain the code. The computer ignores comments. They're just for humans reading the code.
+                    </div>
+                    
+                    <div class="tip-box">
+                        Encourage students to personalize it! Use their real name, sport, and position.
+                    </div>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Reflection & Preview</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>Pair-Share Activity (10 minutes):</strong></p>
+                    
+                    <p>Students turn to a partner and discuss:</p>
+                    <ol>
+                        <li>"One thing you learned today"</li>
+                        <li>"One thing that surprised you"</li>
+                        <li>"One question you still have"</li>
+                    </ol>
+                    
+                    <p>Then 4-5 volunteers share with the whole class.</p>
+                    
+                    <p><strong>Address Common Questions/Concerns (5 minutes):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Expected Student Concern:</strong> "I'm not good at math/computers/coding"<br>
+                        <strong>Response:</strong> "Neither were Steph Curry's coaches when they started using analytics. This is a SKILL you learn, just like free throws or passing. You get better with practice. And we're starting from zero together."
+                    </div>
+                    
+                    <p><strong>Preview Next Session (3 minutes):</strong></p>
+                    
+                    <p>"Next class, you'll use code to analyze REAL athlete statistics. You'll calculate averages, compare players, and start seeing what the numbers tell you about performance. Bring any questions!"</p>
+                    
+                    <p><strong>Quick Exit Ticket (2 minutes):</strong></p>
+                    
+                    <p>Before leaving, each student writes on a sticky note:</p>
+                    <ul>
+                        <li>One emoji that represents how they feel about learning to code (😃 😐 😟)</li>
+                        <li>One word describing today's session</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Collect these to gauge student sentiment and adjust pacing for next session.
+                    </div>
+                </div>
+                
+                <div class="homework">
+                    <h4>📝 Optional Homework</h4>
+                    <ul>
+                        <li>Think about your last 3 games/practices. What's ONE stat you track (or could track)?</li>
+                        <li>Write down 3 numbers from those games (example: points scored, shots taken, minutes played)</li>
+                        <li>We'll use these numbers next class!</li>
+                    </ul>
+                    <p><em>Note: This is optional but encouraged. It makes the next session more personal and relevant.</em></p>
+                </div>
+            </div>
+            
+            <!-- DAY 2 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 2 (Session 2): Your First Real Code</h2>
+                    <p class="day-focus">"From numbers to insights: Building your analyst toolkit"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand variables as "containers" for data</li>
+                        <li>Perform basic calculations with code</li>
+                        <li>Calculate meaningful sports statistics (averages, totals, percentages)</li>
+                        <li>Write code that analyzes personal performance data</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>Laptops with Google Colab access</li>
+                        <li>Sample athlete statistics (provided in lesson)</li>
+                        <li>Whiteboard for explaining concepts</li>
+                        <li>Printout: "Python Basics Cheat Sheet" (optional reference)</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: Warm-Up & Review</div>
+                        <div class="time-badge">10 minutes</div>
+                    </div>
+                    
+                    <p><strong>Quick Review Game (5 minutes):</strong></p>
+                    
+                    <p>Instructor asks rapid-fire questions, students raise hands:</p>
+                    <ul>
+                        <li>"What does data analytics mean?" (Using numbers to make better decisions)</li>
+                        <li>"What tool are we using to write code?" (Google Colab)</li>
+                        <li>"What command did we use to display text?" (print)</li>
+                        <li>"Name one sport that uses analytics." (Any answer is correct!)</li>
+                    </ul>
+                    
+                    <p><strong>Set Up for Today (5 minutes):</strong></p>
+                    
+                    <ul>
+                        <li>Students open Google Colab</li>
+                        <li>Create new notebook titled "Week 1 - Day 2: My Stats"</li>
+                        <li>First cell: Type and run:</li>
+                    </ul>
+                    
+                    <div class="code-block">
+print("Ready to analyze sports data!")
+                    </div>
+                    
+                    <div class="tip-box">
+                        This is a confidence builder. Start with something they already know works.
+                    </div>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: Variables - Containers for Your Data</div>
+                        <div class="time-badge">25 minutes</div>
+                    </div>
+                    
+                    <p><strong>Concept Introduction (8 minutes):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Variable =</strong> A named container that stores information. Like a labeled box that holds your data.
+                    </div>
+                    
+                    <p><strong>Real-World Analogy:</strong></p>
+                    
+                    <p>Draw on whiteboard:</p>
+                    <ul>
+                        <li>Box labeled "points" → contains the number 24</li>
+                        <li>Box labeled "player_name" → contains "LeBron James"</li>
+                        <li>Box labeled "position" → contains "Forward"</li>
+                    </ul>
+                    
+                    <p>"In coding, we create these 'boxes' and give them names. Then we can use those names to work with the data inside."</p>
+                    
+                    <p><strong>First Variable Together (7 minutes):</strong></p>
+                    
+                    <p>Type together on Google Colab:</p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Create a variable</span>
+points = 15
+
+<span class="code-comment"># Display the variable</span>
+print(points)
+                    </div>
+                    
+                    <p><strong>Explain:</strong></p>
+                    <ul>
+                        <li><code>points</code> = name of our box (container)</li>
+                        <li><code>=</code> means "put the following value into this box"</li>
+                        <li><code>15</code> = the value we're storing</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Important: The equals sign (=) in coding means "assign" or "store", NOT "equals to" like in math class. This confuses students at first.
+                    </div>
+                    
+                    <p><strong>More Variable Practice (10 minutes):</strong></p>
+                    
+                    <p>Students type and run each example:</p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Different types of variables</span>
+
+<span class="code-comment"># Numbers (integers)</span>
+rebounds = 8
+assists = 5
+
+<span class="code-comment"># Text (strings - always use quotes)</span>
+player_name = "Maya"
+team = "Eagles"
+
+<span class="code-comment"># Decimal numbers (floats)</span>
+shooting_percentage = 0.456
+
+<span class="code-comment"># Display them all</span>
+print(player_name)
+print("Rebounds:", rebounds)
+print("Assists:", assists)
+print("Shooting %:", shooting_percentage)
+                    </div>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Check for Understanding:</strong> "Why do we use quotes around 'Maya' but not around 8?"<br>
+                        <strong>Answer:</strong> Text needs quotes. Numbers don't.
+                    </div>
+                    
+                    <div class="tip-box">
+                        Encourage students to change the names and numbers to represent themselves or their favorite player!
+                    </div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Math with Code - Real Sports Stats</div>
+                        <div class="time-badge">30 minutes</div>
+                    </div>
+                    
+                    <p><strong>Introduction (5 minutes):</strong></p>
+                    
+                    <p>"Now we're going to use code to do what coaches do: calculate performance statistics!"</p>
+                    
+                    <p><strong>Basic Math Operations:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Python can do math!</span>
+print(10 + 5)   <span class="code-comment"># Addition</span>
+print(20 - 7)   <span class="code-comment"># Subtraction</span>
+print(6 * 4)    <span class="code-comment"># Multiplication</span>
+print(50 / 2)   <span class="code-comment"># Division</span>
+                    </div>
+                    
+                    <p><strong>Calculating Points Per Game (10 minutes):</strong></p>
+                    
+                    <p>Work through this example together:</p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Season statistics for a player</span>
+total_points = 187
+games_played = 10
+
+<span class="code-comment"># Calculate average points per game</span>
+points_per_game = total_points / games_played
+
+<span class="code-comment"># Display the result</span>
+print("Points per game:", points_per_game)
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Key Insight:</strong> "You just did what NBA analysts do! They calculate PPG (points per game) exactly like this."
+                    </div>
+                    
+                    <p><strong>More Real Stats Calculations (15 minutes):</strong></p>
+                    
+                    <p>Students type and run:</p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Basketball shooting percentage</span>
+shots_made = 45
+shots_taken = 100
+
+shooting_percentage = (shots_made / shots_taken) * 100
+print("Shooting percentage:", shooting_percentage, "%")
+
+<span class="code-comment"># Soccer goals per game</span>
+total_goals = 12
+games = 8
+
+goals_per_game = total_goals / games
+print("Goals per game:", goals_per_game)
+
+<span class="code-comment"># Track: Average race time</span>
+race1 = 12.5  <span class="code-comment"># seconds</span>
+race2 = 12.3
+race3 = 12.7
+
+average_time = (race1 + race2 + race3) / 3
+print("Average 100m time:", average_time, "seconds")
+                    </div>
+                    
+                    <div class="instructor-note">
+                        Walk around and help students debug. Common errors: forgetting parentheses, typos in variable names, forgetting quotes around text.
+                    </div>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Quick Discussion:</strong> "Which of these stats would be most useful for YOUR sport? Why?"
+                    </div>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Personalize Your Analytics</div>
+                        <div class="time-badge">20 minutes</div>
+                    </div>
+                    
+                    <p><strong>Independent Coding Challenge:</strong></p>
+                    
+                    <p>"Now it's YOUR turn. Use code to calculate statistics from YOUR sport."</p>
+                    
+                    <p><strong>Template to Use:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># MY SPORTS STATISTICS</span>
+<span class="code-comment"># Fill in with your real numbers!</span>
+
+player_name = "YOUR NAME"
+sport = "YOUR SPORT"
+
+<span class="code-comment"># Game 1 stats</span>
+game1 = 0  <span class="code-comment"># Your stat (points, goals, time, etc)</span>
+
+<span class="code-comment"># Game 2 stats</span>
+game2 = 0
+
+<span class="code-comment"># Game 3 stats</span>
+game3 = 0
+
+<span class="code-comment"># Calculate your average</span>
+average = (game1 + game2 + game3) / 3
+
+<span class="code-comment"># Display results</span>
+print(player_name, "plays", sport)
+print("Average performance:", average)
+                    </div>
+                    
+                    <div class="tip-box">
+                        If students don't have their own stats, they can use stats from their favorite professional athlete or make up realistic numbers for practice.
+                    </div>
+                    
+                    <p><strong>Stretch Challenge (For Advanced Students):</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Calculate improvement from first game to last game</span>
+improvement = game3 - game1
+print("Improvement:", improvement)
+
+<span class="code-comment"># Calculate total</span>
+total = game1 + game2 + game3
+print("Total:", total)
+                    </div>
+                    
+                    <p><strong>Gallery Walk (10 minutes):</strong></p>
+                    
+                    <ul>
+                        <li>Students keep their screens open with their code</li>
+                        <li>Walk around and look at each other's work</li>
+                        <li>3-4 volunteers share their code with the class via projector</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Celebrate every working program! Point out creative approaches or interesting stats students chose to analyze.
+                    </div>
+                </div>
+                
+                <!-- Activity 5 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 5: Wrap-Up & Looking Ahead</div>
+                        <div class="time-badge">5 minutes</div>
+                    </div>
+                    
+                    <p><strong>Today's Big Wins:</strong></p>
+                    
+                    <ol>
+                        <li>✅ You learned what variables are</li>
+                        <li>✅ You used code to do math</li>
+                        <li>✅ You calculated real sports statistics</li>
+                        <li>✅ You wrote personalized code analyzing YOUR performance</li>
+                    </ol>
+                    
+                    <div class="key-concept">
+                        <strong>Reality Check:</strong> "You just did in 90 minutes what takes professional sports analysts weeks to learn in college. You should be proud!"
+                    </div>
+                    
+                    <p><strong>Preview Week 2:</strong></p>
+                    
+                    <p>"Next week, we're going to work with HUNDREDS of athletes' statistics at once. You'll load real NBA, NHL, and soccer data and start comparing players like professional scouts do."</p>
+                    
+                    <p><strong>Final Question:</strong></p>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Popcorn Share:</strong> "In one sentence, what's the coolest thing you learned today?"
+                    </div>
+                </div>
+                
+                <div class="homework">
+                    <h4>📝 Optional Homework</h4>
+                    <ul>
+                        <li><strong>Practice Challenge:</strong> Calculate 3 different statistics from your sport (not just one average)</li>
+                        <li><strong>Research Task:</strong> Find one professional athlete's statistics online (ESPN, NBA.com, etc). Write down 5 numbers about them. We'll use these next week!</li>
+                        <li><strong>Reflection:</strong> What's one question you have about coding or data analysis? Write it down to ask next class.</li>
+                    </ul>
+                    <p><em>Remember: Practice makes better, not perfect. Mistakes are part of learning!</em></p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Week 1 Complete! 🎉</strong></p>
+            <p>Students have written their first code and calculated real sports statistics.</p>
+            <p>Next week: Working with large datasets and comparing players!</p>
+        </footer>
+    </div>
+</body>
+</html>

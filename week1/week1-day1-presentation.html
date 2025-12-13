@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Day 1: The Numbers Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h2 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h3 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        p {
+            font-size: 1.8em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .subtitle {
+            font-size: 2em;
+            opacity: 0.9;
+            font-style: italic;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .emoji {
+            font-size: 5em;
+            margin: 30px 0;
+            animation: bounce 2s infinite;
+        }
+        
+        ul {
+            text-align: left;
+            display: inline-block;
+            font-size: 1.8em;
+            line-height: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        ul li {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        
+        .big-question {
+            font-size: 2.5em;
+            background: rgba(255,255,255,0.2);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 3px solid rgba(255,255,255,0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        .highlight {
+            background: rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .step-box {
+            background: rgba(255,255,255,0.15);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #fff;
+            text-align: left;
+        }
+        
+        .step-box h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .code-preview {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            text-align: left;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 1.2em;
+            background: rgba(0,0,0,0.5);
+            padding: 15px 25px;
+            border-radius: 30px;
+            z-index: 1000;
+        }
+        
+        .slide-number {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 1.2em;
+            background: rgba(0,0,0,0.5);
+            padding: 15px 25px;
+            border-radius: 30px;
+            color: white;
+            z-index: 1000;
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.6);
+            z-index: 1000;
+            font-style: italic;
+        }
+        
+        /* Different slide backgrounds */
+        .slide-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .slide-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .slide-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .slide-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .slide-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .slide-6 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .slide-7 { background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%); }
+        .slide-8 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .slide-9 { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .slide-10 { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); }
+        .slide-11 { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+        .slide-12 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .column-item {
+            background: rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .column-item h3 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .column-item p {
+            font-size: 1.4em;
+        }
+        
+        .example-box {
+            background: rgba(255,255,255,0.2);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .sport-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active slide-1">
+            <div class="slide-content">
+                <div class="emoji">🏀📊💻</div>
+                <h1>Welcome to Sports Data Analytics</h1>
+                <p class="subtitle">Week 1, Day 1: The Numbers Game</p>
+                <p style="margin-top: 50px; font-size: 1.5em;">Every athlete is a data point – let's decode yours</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: What We'll Learn -->
+        <div class="slide slide-2">
+            <div class="slide-content">
+                <h2>What We'll Learn Today</h2>
+                <ul>
+                    <li>🏆 How pro teams use data to WIN</li>
+                    <li>📊 What is data analytics?</li>
+                    <li>💻 Set up our coding tools (Google Colab)</li>
+                    <li>✍️ Write your FIRST line of code</li>
+                    <li>🎯 Connect YOUR sports to data</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Opening Question -->
+        <div class="slide slide-3">
+            <div class="slide-content">
+                <h2>Quick Question</h2>
+                <div class="big-question">
+                    Who here tracks their stats in their sport?
+                </div>
+                <p style="font-size: 1.6em; margin-top: 40px;">What do you track?</p>
+                <p style="font-size: 1.3em; opacity: 0.9;">(Points? Goals? Times? Assists? Saves?)</p>
+            </div>
+        </div>
+        
+        <!-- Slide 4: The Power of Numbers -->
+        <div class="slide slide-4">
+            <div class="slide-content">
+                <h2>🔥 The Power of Numbers in Sports</h2>
+                <div class="three-column">
+                    <div class="column-item">
+                        <div class="sport-icon">🏀</div>
+                        <h3>NBA</h3>
+                        <p>Golden State Warriors used analytics to revolutionize the 3-point shot</p>
+                    </div>
+                    <div class="column-item">
+                        <div class="sport-icon">⚽</div>
+                        <h3>Soccer</h3>
+                        <p>Liverpool FC tracks player fatigue to prevent injuries</p>
+                    </div>
+                    <div class="column-item">
+                        <div class="sport-icon">🏒</div>
+                        <h3>Hockey</h3>
+                        <p>Toronto Maple Leafs analyze shot QUALITY, not just quantity</p>
+                    </div>
+                </div>
+                <p style="margin-top: 50px; font-size: 1.5em;">🎬 Video time!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Discussion -->
+        <div class="slide slide-5">
+            <div class="slide-content">
+                <h2>Let's Discuss</h2>
+                <div style="margin-top: 50px;">
+                    <div class="big-question" style="font-size: 2em;">
+                        What surprised you about how teams use numbers?
+                    </div>
+                    <div class="big-question" style="font-size: 2em;">
+                        What stats matter most in YOUR sport?
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: What is Data Analytics -->
+        <div class="slide slide-6">
+            <div class="slide-content">
+                <h2>What IS Data Analytics?</h2>
+                <div class="highlight" style="font-size: 2em; margin: 40px 0;">
+                    Using numbers and patterns to make better decisions
+                </div>
+                <div class="three-column" style="margin-top: 60px;">
+                    <div class="column-item">
+                        <h3>1️⃣ COLLECT</h3>
+                        <p>Gather the numbers (stats from games)</p>
+                    </div>
+                    <div class="column-item">
+                        <h3>2️⃣ ANALYZE</h3>
+                        <p>Look for patterns (what works? what doesn't?)</p>
+                    </div>
+                    <div class="column-item">
+                        <h3>3️⃣ DECIDE</h3>
+                        <p>Make smarter choices (improve strategy)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Real Example -->
+        <div class="slide slide-7">
+            <div class="slide-content">
+                <h2 style="margin-bottom: 20px;">Real Example: Improve Your Game</h2>
+                <div class="step-box" style="padding: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 1.6em;">🏀 Basketball Player Wants to Score More</h3>
+                    <div class="example-box" style="padding: 15px; margin: 10px 0;">
+                        <p style="font-size: 1.5em; margin-bottom: 8px;"><strong>STEP 1 - COLLECT:</strong></p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">Track shots taken vs. made for 10 games</p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">Record location: 3-point, mid-range, layup</p>
+                    </div>
+                    <div class="example-box" style="padding: 15px; margin: 10px 0;">
+                        <p style="font-size: 1.5em; margin-bottom: 8px;"><strong>STEP 2 - ANALYZE:</strong></p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">3-point shooting = 25% accuracy ❌</p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">Mid-range = 45% accuracy 🤔</p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">Layups = 70% accuracy ✅</p>
+                    </div>
+                    <div class="example-box" style="padding: 15px; margin: 10px 0;">
+                        <p style="font-size: 1.5em; margin-bottom: 8px;"><strong>STEP 3 - DECIDE:</strong></p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">✅ Focus on getting to the basket more</p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">✅ Practice 3-point shots in training</p>
+                        <p style="font-size: 1.4em; margin-bottom: 5px;">✅ Maybe avoid mid-range for now</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Your Turn -->
+        <div class="slide slide-8">
+            <div class="slide-content">
+                <h2>Turn and Talk</h2>
+                <div class="big-question" style="font-size: 2em;">
+                    Think of a decision YOU make in your sport.
+                    <br><br>
+                    What data could help you make that decision better?
+                </div>
+                <p style="margin-top: 50px; font-size: 1.5em;">⏱️ 2 minutes with a partner</p>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Google Colab Intro -->
+        <div class="slide slide-9">
+            <div class="slide-content">
+                <h2>Time to CODE! 💻</h2>
+                <div class="highlight" style="font-size: 2em; margin: 40px 0;">
+                    Google Colab = Your free online coding lab
+                </div>
+                <p style="font-size: 1.6em; margin-top: 40px;">It's like Google Docs... but for code!</p>
+                <div style="margin-top: 60px;">
+                    <p style="font-size: 1.8em;">✅ Free</p>
+                    <p style="font-size: 1.8em;">✅ No software to install</p>
+                    <p style="font-size: 1.8em;">✅ Works in your web browser</p>
+                    <p style="font-size: 1.8em;">✅ Saves automatically</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Setup Steps -->
+        <div class="slide slide-10">
+            <div class="slide-content">
+                <h2>Let's Set Up Together</h2>
+                <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                    <div class="step-box">
+                        <p style="font-size: 2em;"><strong>Step 1:</strong> Open your web browser</p>
+                    </div>
+                    <div class="step-box">
+                        <p style="font-size: 2em;"><strong>Step 2:</strong> Go to <span class="highlight">colab.research.google.com</span></p>
+                    </div>
+                    <div class="step-box">
+                        <p style="font-size: 2em;"><strong>Step 3:</strong> Sign in with Google account</p>
+                    </div>
+                    <div class="step-box">
+                        <p style="font-size: 2em;"><strong>Step 4:</strong> Click "New Notebook"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Your First Code -->
+        <div class="slide slide-11">
+            <div class="slide-content">
+                <h2>Your First Line of Code!</h2>
+                <p style="font-size: 1.8em; margin-bottom: 30px;">Type this EXACTLY as shown:</p>
+                <div class="code-preview">
+print("Hello, I'm a data analyst!")
+                </div>
+                <p style="font-size: 1.8em; margin-top: 40px;">Now click the ▶️ play button</p>
+                <div class="emoji" style="margin-top: 40px;">🎉</div>
+                <p style="font-size: 2em; margin-top: 20px;"><strong>YOU JUST WROTE CODE!</strong></p>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Recap -->
+        <div class="slide slide-12">
+            <div class="slide-content">
+                <h2>Today's Wins! 🏆</h2>
+                <ul style="font-size: 2em;">
+                    <li>✅ Learned how pro teams use data</li>
+                    <li>✅ Understood what data analytics is</li>
+                    <li>✅ Set up Google Colab</li>
+                    <li>✅ Wrote your FIRST code</li>
+                </ul>
+                <div style="margin-top: 60px;">
+                    <p style="font-size: 1.8em;"><strong>Next Time:</strong></p>
+                    <p style="font-size: 1.6em;">We'll use code to calculate REAL sports statistics!</p>
+                </div>
+                <p style="margin-top: 50px; font-size: 1.4em; opacity: 0.9;">You're officially programmers! 💪</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        ← → to navigate | Click anywhere to advance
+    </div>
+    
+    <div class="slide-number">
+        <span id="current-slide">1</span> / <span id="total-slides">12</span>
+    </div>
+    
+    <div class="watermark">
+        Created by David Adade
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        // Click to advance
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navigation')) {
+                nextSlide();
+            }
+        });
+    </script>
+</body>
+</html>

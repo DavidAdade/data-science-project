@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Day 1: Creating Calculated Columns</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h2 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h3 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        p {
+            font-size: 1.8em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .subtitle {
+            font-size: 2em;
+            opacity: 0.9;
+            font-style: italic;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .emoji {
+            font-size: 5em;
+            margin: 30px 0;
+            animation: bounce 2s infinite;
+        }
+        
+        ul {
+            text-align: left;
+            display: inline-block;
+            font-size: 1.8em;
+            line-height: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        ul li {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        
+        .big-question {
+            font-size: 2.5em;
+            background: rgba(255,255,255,0.2);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 3px solid rgba(255,255,255,0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        .highlight {
+            background: rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .code-preview {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.4em;
+            text-align: left;
+            margin: 30px auto;
+            max-width: 900px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 1.2em;
+            background: rgba(0,0,0,0.5);
+            padding: 15px 25px;
+            border-radius: 30px;
+            z-index: 1000;
+        }
+        
+        .slide-number {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 1.2em;
+            background: rgba(0,0,0,0.5);
+            padding: 15px 25px;
+            border-radius: 30px;
+            color: white;
+            z-index: 1000;
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.6);
+            z-index: 1000;
+            font-style: italic;
+        }
+        
+        .slide-1 { background: linear-gradient(135deg, #232526 0%, #414345 100%); }
+        .slide-2 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+        .slide-3 { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+        .slide-4 { background: linear-gradient(135deg, #134e5e 0%, #71b280 100%); }
+        .slide-5 { background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); }
+        .slide-6 { background: linear-gradient(135deg, #373b44 0%, #4286f4 100%); }
+        .slide-7 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+        .slide-8 { background: linear-gradient(135deg, #141e30 0%, #243b55 100%); }
+        .slide-9 { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+        .slide-10 { background: linear-gradient(135deg, #232526 0%, #414345 100%); }
+        .slide-11 { background: linear-gradient(135deg, #134e5e 0%, #71b280 100%); }
+        .slide-12 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .column-item {
+            background: rgba(255,255,255,0.15);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .stats-box {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 700px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1 -->
+        <div class="slide active slide-1">
+            <div class="slide-content">
+                <div class="emoji">🧮📊✨</div>
+                <h1>Creating Calculated Columns</h1>
+                <p class="subtitle">Week 3, Day 1: Create Advanced Stats Like the Pros</p>
+                <p style="margin-top: 50px; font-size: 1.5em;">Go beyond basic stats!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="slide slide-2">
+            <div class="slide-content">
+                <h2>Today's Mission 🎯</h2>
+                <ul>
+                    <li>🧮 Do math on entire columns at once</li>
+                    <li>⚡ Create efficiency metrics</li>
+                    <li>📈 Build advanced stats (PPM, TS%, USG%)</li>
+                    <li>➕ Add new columns to our dataset</li>
+                    <li>🔍 Use new metrics for better analysis</li>
+                </ul>
+                <p style="margin-top: 60px; font-size: 1.5em;">Level up your analyst skills!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="slide slide-3">
+            <div class="slide-content">
+                <h2>The Problem 🤔</h2>
+                <div class="big-question" style="font-size: 2em;">
+                    Two players both score 20 points.<br>
+                    Player A plays 40 minutes.<br>
+                    Player B plays 25 minutes.<br><br>
+                    Who's more efficient?
+                </div>
+                <p style="margin-top: 40px; font-size: 1.8em;">Basic stats don't tell the full story!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 4 -->
+        <div class="slide slide-4">
+            <div class="slide-content">
+                <h2>Why Advanced Stats? 📈</h2>
+                <div class="stats-box" style="text-align: left;">
+                    <p style="font-size: 1.6em; margin-bottom: 15px;"><strong>Points Per Minute (PPM)</strong></p>
+                    <p style="font-size: 1.4em;">How efficient is scoring?</p>
+                    
+                    <p style="font-size: 1.6em; margin: 25px 0 15px 0;"><strong>True Shooting % (TS%)</strong></p>
+                    <p style="font-size: 1.4em;">Accounts for 3-pointers and free throws</p>
+                    
+                    <p style="font-size: 1.6em; margin: 25px 0 15px 0;"><strong>Usage Rate (USG%)</strong></p>
+                    <p style="font-size: 1.4em;">How much does a team rely on this player?</p>
+                </div>
+                <p style="margin-top: 40px; font-size: 1.6em;">NBA teams use these EVERY DAY! 🏀</p>
+            </div>
+        </div>
+        
+        <!-- Slide 5 -->
+        <div class="slide slide-5">
+            <div class="slide-content">
+                <h2>The Magic of Pandas 🐼</h2>
+                <div class="highlight" style="font-size: 2em; margin: 40px 0;">
+                    You can do math on ENTIRE columns at once!
+                </div>
+                <p style="font-size: 1.8em; margin-top: 50px;">No loops. No manual work. Just instant calculations for ALL 450 players! ⚡</p>
+            </div>
+        </div>
+        
+        <!-- Slide 6 -->
+        <div class="slide slide-6">
+            <div class="slide-content">
+                <h2>Your First Calculated Column</h2>
+                <div class="code-preview">
+                    <div class="code-comment"># Load our data</div>
+                    <div>import pandas as pd</div>
+                    <div>data = pd.read_csv("nba_stats.csv")</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Calculate points per minute for EVERYONE!</div>
+                    <div>data['PPM'] = data['PTS'] / data['MIN']</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># See the new column</div>
+                    <div>print(data[['Player', 'PTS', 'MIN', 'PPM']].head())</div>
+                </div>
+                <p style="margin-top: 30px; font-size: 1.6em;">🎉 You just analyzed 450 players in 1 second!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 7 -->
+        <div class="slide slide-7">
+            <div class="slide-content">
+                <h2>Create Multiple Stats at Once</h2>
+                <div class="code-preview">
+                    <div class="code-comment"># Rebounds per game</div>
+                    <div>data['RPG'] = data['REB'] / data['GP']</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Assists per game</div>
+                    <div>data['APG'] = data['AST'] / data['GP']</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Points per shot attempt</div>
+                    <div>data['PTS_per_FGA'] = data['PTS'] / data['FGA']</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># See all our new stats</div>
+                    <div>print(data[['Player', 'PPM', 'RPG', 'APG']].head(10))</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8 -->
+        <div class="slide slide-8">
+            <div class="slide-content">
+                <h2>Advanced Metric: True Shooting %</h2>
+                <p style="font-size: 1.6em; margin-bottom: 30px;">Better than regular FG% - accounts for 3s and free throws!</p>
+                <div class="code-preview" style="font-size: 1.3em;">
+                    <div class="code-comment"># True Shooting Percentage</div>
+                    <div>data['TS%'] = data['PTS'] / (2 * (data['FGA'] + 0.44 * data['FTA']))</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Find the most efficient scorers</div>
+                    <div>top_efficiency = data.sort_values('TS%', ascending=False)</div>
+                    <div>print(top_efficiency[['Player', 'PTS', 'TS%']].head(10))</div>
+                </div>
+                <p style="margin-top: 30px; font-size: 1.5em;">This is what NBA scouts use! 🎯</p>
+            </div>
+        </div>
+        
+        <!-- Slide 9 -->
+        <div class="slide slide-9">
+            <div class="slide-content">
+                <h2>Usage Rate: Who Carries the Team?</h2>
+                <div class="code-preview" style="font-size: 1.3em;">
+                    <div class="code-comment"># Calculate usage rate</div>
+                    <div>data['USG%'] = 100 * ((data['FGA'] + 0.44 * data['FTA'] + data['TOV']) / data['MIN'])</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Find players with highest usage</div>
+                    <div>high_usage = data.sort_values('USG%', ascending=False)</div>
+                    <div>print(high_usage[['Player', 'USG%', 'PTS']].head(10))</div>
+                </div>
+                <p style="margin-top: 30px; font-size: 1.6em;">High usage = team runs the offense through them</p>
+            </div>
+        </div>
+        
+        <!-- Slide 10 -->
+        <div class="slide slide-10">
+            <div class="slide-content">
+                <h2>Assist/Turnover Ratio</h2>
+                <p style="font-size: 1.6em; margin-bottom: 30px;">Great for evaluating point guards!</p>
+                <div class="code-preview">
+                    <div class="code-comment"># Calculate AST/TO ratio</div>
+                    <div>data['AST_TO_Ratio'] = data['AST'] / data['TOV']</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Best decision makers</div>
+                    <div>best_pgs = data.sort_values('AST_TO_Ratio', ascending=False)</div>
+                    <div>print(best_pgs[['Player', 'AST', 'TOV', 'AST_TO_Ratio']].head(10))</div>
+                </div>
+                <p style="margin-top: 30px; font-size: 1.6em;">Higher = better decision making! 🧠</p>
+            </div>
+        </div>
+        
+        <!-- Slide 11 -->
+        <div class="slide slide-11">
+            <div class="slide-content">
+                <h2>Now Ask Better Questions! 🔍</h2>
+                <div class="code-preview" style="font-size: 1.2em;">
+                    <div class="code-comment"># Find efficient scorers (high PPM AND high TS%)</div>
+                    <div>efficient = data[(data['PPM'] > 0.6) & (data['TS%'] > 0.60)]</div>
+                    <div>print(efficient[['Player', 'PPM', 'TS%', 'PTS']].head())</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Find high-usage players who are still efficient</div>
+                    <div>superstars = data[(data['USG%'] > 25) & (data['TS%'] > 0.55)]</div>
+                    <div>print(superstars[['Player', 'USG%', 'TS%']].head())</div>
+                    <div></div>
+                    
+                    <div class="code-comment"># Find undervalued players</div>
+                    <div class="code-comment"># High efficiency but low minutes (could play more!)</div>
+                    <div>undervalued = data[(data['TS%'] > 0.58) & (data['MIN'] < 25)]</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12 -->
+        <div class="slide slide-12">
+            <div class="slide-content">
+                <h2>You're Now an Advanced Analyst! 🏆</h2>
+                <ul style="font-size: 2em;">
+                    <li>✅ Math on entire columns</li>
+                    <li>✅ Created efficiency metrics</li>
+                    <li>✅ Built PPM, TS%, USG%, AST/TO</li>
+                    <li>✅ Added columns to dataset</li>
+                    <li>✅ Found hidden insights</li>
+                </ul>
+                <div style="margin-top: 60px;">
+                    <p style="font-size: 2em;"><strong>Next Time:</strong></p>
+                    <p style="font-size: 1.6em;">Make your data VISUAL with charts and graphs! 📊</p>
+                </div>
+                <div class="emoji" style="margin-top: 30px;">🎉💪🔥</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        ← → to navigate | Click anywhere to advance
+    </div>
+    
+    <div class="slide-number">
+        <span id="current-slide">1</span> / <span id="total-slides">12</span>
+    </div>
+    
+    <div class="watermark">
+        Created by David Adade
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navigation')) {
+                nextSlide();
+            }
+        });
+    </script>
+</body>
+</html>

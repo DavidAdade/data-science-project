@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5: Independent Project Work</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .program-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            margin: 30px;
+        }
+        
+        .program-info h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #764ba2;
+        }
+        
+        .info-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .day-section {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: -30px -30px 25px -30px;
+        }
+        
+        .day-header h2 {
+            font-size: 1.8em;
+        }
+        
+        .day-header .day-focus {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .objectives {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .objectives h4 {
+            color: #1565C0;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .objectives ul {
+            margin-left: 20px;
+        }
+        
+        .objectives li {
+            margin-bottom: 8px;
+        }
+        
+        .materials {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        
+        .materials h4 {
+            color: #e65100;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .activity {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .activity-title {
+            font-size: 1.3em;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+        
+        .time-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .discussion-prompt {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .discussion-prompt strong {
+            color: #2e7d32;
+        }
+        
+        .instructor-note {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+        
+        .instructor-note::before {
+            content: "👨‍🏫 Instructor Note: ";
+            font-weight: bold;
+            color: #f57f17;
+        }
+        
+        .key-concept {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .key-concept strong {
+            color: #6a1b9a;
+        }
+        
+        .project-option {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .project-option h4 {
+            color: #2e7d32;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+        
+        ul {
+            margin-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .tip-box {
+            background: #e1f5fe;
+            border: 2px dashed #0288d1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box::before {
+            content: "💡 Pro Tip: ";
+            font-weight: bold;
+            color: #01579b;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Week 5: Independent Project Work 🔬</h1>
+            <p class="subtitle">Sessions 9-10: Becoming the Analyst</p>
+        </header>
+        
+        <div class="program-info">
+            <h3>Week 5 Overview</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Focus</strong>
+                    Independent project work and presentations
+                </div>
+                <div class="info-item">
+                    <strong>Skills Applied</strong>
+                    All techniques from Weeks 1-4
+                </div>
+                <div class="info-item">
+                    <strong>Student Role</strong>
+                    Lead their own analysis investigations
+                </div>
+                <div class="info-item">
+                    <strong>Outcome</strong>
+                    Professional presentations of findings
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="key-concept">
+                <strong>What Students Learn This Week:</strong>
+                <ul>
+                    <li>Planning and executing an independent data analysis project</li>
+                    <li>Applying all previously learned skills in an integrated way</li>
+                    <li>Troubleshooting and problem-solving independently</li>
+                    <li>Preparing professional presentations</li>
+                </ul>
+            </div>
+            
+            <div class="key-concept">
+                <strong>Engagement Hook:</strong> Students take ownership of their learning by investigating sports questions they genuinely care about. This is where everything comes together!
+            </div>
+            
+            <!-- Project Options -->
+            <div style="margin: 40px 0;">
+                <h2 style="text-align: center; color: #1e3c72; margin-bottom: 30px;">📋 Project Options (Students Choose One)</h2>
+                
+                <div class="project-option">
+                    <h4>Option A: Player Comparison Report 🏀</h4>
+                    <p><strong>Goal:</strong> Compare 3-5 professional athletes across multiple statistics and determine who performs best</p>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul>
+                        <li>Comparison table showing key stats for each player</li>
+                        <li>At least 2 visualizations (bar charts, scatter plots)</li>
+                        <li>Written analysis (5-7 sentences) with conclusion</li>
+                        <li>Clear answer to "Who's the best and why?"</li>
+                    </ul>
+                    <p><strong>Example Questions:</strong></p>
+                    <ul>
+                        <li>"Who's more valuable: LeBron, Giannis, or KD?"</li>
+                        <li>"Who's the most efficient scorer among top players?"</li>
+                        <li>"Which young player has the brightest future?"</li>
+                    </ul>
+                    <p><strong>Good for:</strong> Students who love specific players and want to settle debates!</p>
+                </div>
+                
+                <div class="project-option">
+                    <h4>Option B: Team Performance Analysis 🏆</h4>
+                    <p><strong>Goal:</strong> Analyze what factors predict whether a team wins or loses games</p>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul>
+                        <li>Team statistics vs. league average comparison</li>
+                        <li>Identification of team strengths and weaknesses</li>
+                        <li>2+ visualizations showing team performance</li>
+                        <li>Recommendations for how the team could improve</li>
+                    </ul>
+                    <p><strong>Example Questions:</strong></p>
+                    <ul>
+                        <li>"What makes the Lakers successful this season?"</li>
+                        <li>"Why are the [Team] struggling?"</li>
+                        <li>"Which players contribute most to [Team]'s success?"</li>
+                    </ul>
+                    <p><strong>Good for:</strong> Students who follow a specific team closely!</p>
+                </div>
+                
+                <div class="project-option">
+                    <h4>Option C: Personal Performance Tracker 📈</h4>
+                    <p><strong>Goal:</strong> Use their own athletic data to identify what training approaches improve their game</p>
+                    <p><strong>Deliverables:</strong></p>
+                    <ul>
+                        <li>Personal statistics tracked over 5+ games/practices</li>
+                        <li>Analysis of performance trends and improvements</li>
+                        <li>Visualizations showing progress over time</li>
+                        <li>Action plan for continued improvement</li>
+                    </ul>
+                    <p><strong>Example Questions:</strong></p>
+                    <ul>
+                        <li>"How has my shooting improved this season?"</li>
+                        <li>"What practice activities improve my game performance?"</li>
+                        <li>"Am I more consistent now than at the start of the season?"</li>
+                    </ul>
+                    <p><strong>Good for:</strong> Students who track their own stats and want personal insights!</p>
+                </div>
+            </div>
+            
+            <!-- DAY 1 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 1 (Session 9): Project Launch & Work Time</h2>
+                    <p class="day-focus">"From idea to investigation"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Session Objectives</h4>
+                    <ul>
+                        <li>Finalize project choice and research question</li>
+                        <li>Load and explore relevant data</li>
+                        <li>Begin filtering and calculating key metrics</li>
+                        <li>Create at least one preliminary visualization</li>
+                        <li>Troubleshoot technical challenges with support</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>All NBA datasets (basic and enhanced versions)</li>
+                        <li>Google Colab access for all students</li>
+                        <li>Project planning template (from Week 4)</li>
+                        <li>Example project code snippets (for reference)</li>
+                        <li>Troubleshooting guide printed and available</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: Project Kickoff</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Project Overview & Expectations (10 minutes):</strong></p>
+                    
+                    <p><strong>Display on screen:</strong></p>
+                    <div class="key-concept">
+                        <strong>Your Project Must Include:</strong>
+                        <ul>
+                            <li>✅ A clear research question</li>
+                            <li>✅ Data filtering and/or calculated columns</li>
+                            <li>✅ At least 2 different visualizations</li>
+                            <li>✅ Written analysis (5-7 sentences minimum)</li>
+                            <li>✅ A clear conclusion that answers your question</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Timeline:</strong></p>
+                    <ul>
+                        <li><strong>Today:</strong> Data exploration and first visualization</li>
+                        <li><strong>Next Session:</strong> Complete analysis and prepare presentation</li>
+                        <li><strong>Week 6:</strong> Present findings to class</li>
+                    </ul>
+                    
+                    <p><strong>Quick Poll (5 minutes):</strong></p>
+                    <p>Students raise hands for which option they're choosing:</p>
+                    <ul>
+                        <li>How many: Option A (Player Comparison)?</li>
+                        <li>How many: Option B (Team Analysis)?</li>
+                        <li>How many: Option C (Personal Tracker)?</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Make note of who's doing what. Group students with same project type together so they can help each other troubleshoot.
+                    </div>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: Project Planning Check-In</div>
+                        <div class="time-badge">10 minutes</div>
+                    </div>
+                    
+                    <p><strong>Individual Planning (5 minutes):</strong></p>
+                    
+                    <p>Students write down (on paper or in notebook):</p>
+                    <ol>
+                        <li>My specific research question is: ___________</li>
+                        <li>The players/teams I'm analyzing: ___________</li>
+                        <li>The key stats I need: ___________</li>
+                        <li>My two visualizations will be: ___________ and ___________</li>
+                    </ol>
+                    
+                    <p><strong>Partner Share (5 minutes):</strong></p>
+                    
+                    <p>Students turn to a neighbor and explain their project in 30 seconds. Partner asks:</p>
+                    <ul>
+                        <li>"Is your question specific enough?"</li>
+                        <li>"Do you have the data you need?"</li>
+                        <li>"What do you think you'll find?"</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        This accountability moment helps students clarify their thinking before diving into code.
+                    </div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Code Templates & Getting Started</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Provide Starting Code Templates (Display on screen):</strong></p>
+                    
+                    <p><strong>For ALL Projects - Start Here:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Import libraries</span>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+<span class="code-comment"># Load the data</span>
+data = pd.read_csv("nba_stats_enhanced.csv")
+
+<span class="code-comment"># Quick look at what you have</span>
+print(data.head())
+print(data.columns)
+</div>
+                    
+                    <p><strong>Option A Template - Player Comparison:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Select the players you want to compare</span>
+players = ['LeBron James', 'Giannis Antetokounmpo', 'Kevin Durant']
+my_players = data[data['Player'].isin(players)]
+
+<span class="code-comment"># Look at key stats</span>
+print(my_players[['Player', 'PTS', 'REB', 'AST', 'TS%', 'USG%']])
+
+<span class="code-comment"># Create comparison bar chart</span>
+plt.figure(figsize=(10, 6))
+plt.bar(my_players['Player'], my_players['PTS'])
+plt.xlabel('Player')
+plt.ylabel('Points Per Game')
+plt.title('Scoring Comparison')
+plt.xticks(rotation=45)
+plt.show()
+</div>
+                    
+                    <p><strong>Option B Template - Team Analysis:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Filter for your team</span>
+my_team = data[data['Team'] == 'LAL']
+
+<span class="code-comment"># Compare to league average</span>
+league_avg_pts = data['PTS'].mean()
+team_avg_pts = my_team['PTS'].mean()
+
+print(f"League Average: {league_avg_pts:.2f} PPG")
+print(f"Team Average: {team_avg_pts:.2f} PPG")
+
+<span class="code-comment"># Show team's top scorers</span>
+top_scorers = my_team.sort_values('PTS', ascending=False).head(5)
+print(top_scorers[['Player', 'PTS', 'REB', 'AST']])
+</div>
+                    
+                    <p><strong>Option C Template - Personal Performance:</strong></p>
+                    
+                    <div class="code-block">
+<span class="code-comment"># Your personal data (modify these with YOUR stats)</span>
+games = [1, 2, 3, 4, 5, 6, 7, 8]
+points = [12, 15, 14, 18, 20, 17, 22, 19]
+
+<span class="code-comment"># Create line graph showing improvement</span>
+plt.figure(figsize=(10, 6))
+plt.plot(games, points, marker='o', linewidth=2, markersize=8)
+plt.xlabel('Game Number')
+plt.ylabel('Points Scored')
+plt.title('My Scoring Progress This Season')
+plt.grid(True, alpha=0.3)
+plt.show()
+
+<span class="code-comment"># Calculate average improvement</span>
+first_half_avg = sum(points[:4]) / 4
+second_half_avg = sum(points[4:]) / 4
+improvement = second_half_avg - first_half_avg
+print(f"Improvement: {improvement:.2f} points per game")
+</div>
+                    
+                    <div class="instructor-note">
+                        Project these templates on screen and have them available as a shared document students can copy from. This removes the "blank page" anxiety.
+                    </div>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Independent Work Time</div>
+                        <div class="time-badge">45 minutes</div>
+                    </div>
+                    
+                    <p><strong>Student Work Session:</strong></p>
+                    
+                    <p>Students work independently or in pairs on their projects. They should accomplish:</p>
+                    
+                    <div class="key-concept">
+                        <strong>Minimum Goals for Today:</strong>
+                        <ul>
+                            <li>✅ Load and filter data successfully</li>
+                            <li>✅ Create at least 1 working visualization</li>
+                            <li>✅ Calculate any needed metrics</li>
+                            <li>✅ Write down 2-3 observations about the data</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Instructor Role - Circulate and Support:</strong></p>
+                    
+                    <p>Walk around the room helping students. Common issues to watch for:</p>
+                    
+                    <ul>
+                        <li><strong>Can't filter data:</strong> Check spelling of player/team names (case-sensitive!)</li>
+                        <li><strong>Charts don't show:</strong> Make sure they have plt.show() at the end</li>
+                        <li><strong>Too ambitious:</strong> Help them simplify if overwhelmed</li>
+                        <li><strong>Not sure what to do:</strong> Refer them back to templates</li>
+                        <li><strong>Finished early:</strong> Challenge them to add a second chart or try correlation</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        Set a timer for every 15 minutes. When it goes off, say "Quick check: raise your hand if you have a chart showing!" This helps you identify who needs help.
+                    </div>
+                    
+                    <p><strong>Troubleshooting Station:</strong></p>
+                    
+                    <p>Have a dedicated area where students can come for one-on-one help. Keep a list of common errors:</p>
+                    
+                    <ul>
+                        <li><strong>"KeyError":</strong> Column name is misspelled</li>
+                        <li><strong>"NameError":</strong> Variable doesn't exist (typo or didn't run previous cell)</li>
+                        <li><strong>"FileNotFoundError":</strong> CSV file not in the right location</li>
+                        <li><strong>Empty chart:</strong> Data was filtered out completely</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 5 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 5: Progress Check & Homework</div>
+                        <div class="time-badge">5 minutes</div>
+                    </div>
+                    
+                    <p><strong>Quick Progress Poll:</strong></p>
+                    
+                    <p>Students raise hands:</p>
+                    <ul>
+                        <li>Who has their data loaded? 🙋</li>
+                        <li>Who has created at least one chart? 🙋</li>
+                        <li>Who feels stuck and needs help? 🙋</li>
+                    </ul>
+                    
+                    <p><strong>Homework Assignment:</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Before Next Class:</strong>
+                        <ul>
+                            <li>Complete at least 2 visualizations</li>
+                            <li>Write 3-5 sentences about what your data shows</li>
+                            <li>Prepare questions if you're stuck on anything</li>
+                            <li>Optional: Start thinking about how you'll present your findings</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Encouragement:</strong></p>
+                    <p>"You're doing REAL data analysis now. This is exactly what professional analysts do. Keep going!"</p>
+                </div>
+            </div>
+            
+            <!-- DAY 2 -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>Day 2 (Session 10): Complete Projects & Presentation Prep</h2>
+                    <p class="day-focus">"Polish your analysis and prepare to present like a pro"</p>
+                </div>
+                
+                <div class="objectives">
+                    <h4>🎯 Session Objectives</h4>
+                    <ul>
+                        <li>Finalize all project components (data, visualizations, analysis)</li>
+                        <li>Learn professional presentation techniques</li>
+                        <li>Practice presenting findings clearly and confidently</li>
+                        <li>Give and receive peer feedback</li>
+                        <li>Prepare for Week 6 presentations</li>
+                    </ul>
+                </div>
+                
+                <div class="materials">
+                    <h4>📦 Materials Needed</h4>
+                    <ul>
+                        <li>Completed or in-progress student projects</li>
+                        <li>Presentation guidelines handout</li>
+                        <li>Peer feedback forms</li>
+                        <li>Timer for practice presentations</li>
+                        <li>Optional: rubric preview for final presentations</li>
+                    </ul>
+                </div>
+                
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 1: Project Completion Work Time</div>
+                        <div class="time-badge">40 minutes</div>
+                    </div>
+                    
+                    <p><strong>Focus Time:</strong></p>
+                    
+                    <p>Students work to complete their projects. By end of this session, they should have:</p>
+                    
+                    <div class="key-concept">
+                        <strong>Project Completion Checklist:</strong>
+                        <ul>
+                            <li>✅ 2+ visualizations completed and labeled</li>
+                            <li>✅ Key statistics calculated and displayed</li>
+                            <li>✅ Written analysis (5-7 sentences minimum)</li>
+                            <li>✅ Clear conclusion that answers research question</li>
+                            <li>✅ Code is organized and runs without errors</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Instructor Support Priority:</strong></p>
+                    
+                    <ol>
+                        <li><strong>Students who are stuck</strong> - Help them troubleshoot and get unstuck</li>
+                        <li><strong>Students finishing early</strong> - Challenge them to improve visualizations or add depth</li>
+                        <li><strong>Students with working projects</strong> - Help them refine and polish</li>
+                    </ol>
+                    
+                    <div class="tip-box">
+                        At 20 minutes remaining, announce: "If you're not done with at least one chart, come see me NOW for help!"
+                    </div>
+                </div>
+                
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 2: How to Present Like a Pro Analyst</div>
+                        <div class="time-badge">15 minutes</div>
+                    </div>
+                    
+                    <p><strong>Presentation Structure (Display on screen):</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Your 3-Minute Presentation Should Include:</strong>
+                        
+                        <p><strong>1. Introduction (30 seconds)</strong></p>
+                        <ul>
+                            <li>Your name</li>
+                            <li>Your research question</li>
+                            <li>Why you chose this topic</li>
+                        </ul>
+                        
+                        <p><strong>2. Your Analysis (1 minute)</strong></p>
+                        <ul>
+                            <li>What data you used</li>
+                            <li>What you calculated or compared</li>
+                            <li>Show your visualizations (explain what they show)</li>
+                        </ul>
+                        
+                        <p><strong>3. Findings (1 minute)</strong></p>
+                        <ul>
+                            <li>What did you discover?</li>
+                            <li>What surprised you?</li>
+                            <li>Answer to your research question</li>
+                        </ul>
+                        
+                        <p><strong>4. Q&A (30 seconds)</strong></p>
+                        <ul>
+                            <li>Be ready for 1-2 questions from class</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Presentation Tips:</strong></p>
+                    
+                    <ul>
+                        <li>🗣️ <strong>Speak clearly</strong> - Pretend you're explaining to someone who doesn't know basketball</li>
+                        <li>👁️ <strong>Make eye contact</strong> - Look at the audience, not just the screen</li>
+                        <li>📊 <strong>Explain your charts</strong> - Don't just show them, tell us what they mean</li>
+                        <li>🎯 <strong>Focus on insights</strong> - What did you LEARN, not just what you DID</li>
+                        <li>💪 <strong>Be confident</strong> - You did real analysis! Be proud!</li>
+                    </ul>
+                    
+                    <div class="instructor-note">
+                        Model a quick 1-minute example presentation yourself using a simple analysis. Show them what good looks like.
+                    </div>
+                </div>
+                
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 3: Practice Presentations</div>
+                        <div class="time-badge">30 minutes</div>
+                    </div>
+                    
+                    <p><strong>Partner Practice (15 minutes):</strong></p>
+                    
+                    <p>Students pair up and practice presenting to each other. Each person:</p>
+                    <ol>
+                        <li>Presents for 2-3 minutes</li>
+                        <li>Receives feedback using "2 Stars and a Wish" format:
+                            <ul>
+                                <li>⭐ One thing done really well</li>
+                                <li>⭐ Another strength</li>
+                                <li>💫 One suggestion for improvement</li>
+                            </ul>
+                        </li>
+                        <li>Switches roles</li>
+                    </ol>
+                    
+                    <p><strong>Small Group Practice (15 minutes):</strong></p>
+                    
+                    <p>Groups of 4-5 students. Each person presents while others:</p>
+                    <ul>
+                        <li>Listen actively</li>
+                        <li>Write down one question to ask</li>
+                        <li>Give quick feedback</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        Rotate through groups and observe. Note who needs extra support or encouragement before the real presentations.
+                    </div>
+                </div>
+                
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activity 4: Final Preparation & Wrap-Up</div>
+                        <div class="time-badge">5 minutes</div>
+                    </div>
+                    
+                    <p><strong>Final Reminders:</strong></p>
+                    
+                    <div class="key-concept">
+                        <strong>Before Week 6 Presentations:</strong>
+                        <ul>
+                            <li>✅ Make sure your code runs completely without errors</li>
+                            <li>✅ Practice your presentation at least once more at home</li>
+                            <li>✅ Time yourself - aim for 3 minutes</li>
+                            <li>✅ Save your work! (Download your notebook)</li>
+                            <li>✅ Prepare to be proud of what you've accomplished!</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Preview Week 6:</strong></p>
+                    
+                    <p>"Next week is SHOWTIME! You'll present your findings to the class like professional analysts. We'll also talk about careers in sports analytics and data science. This is your moment to shine! 🌟"</p>
+                    
+                    <div class="discussion-prompt">
+                        <strong>Closing Question:</strong> "What's one thing you're proud of in your project?"
+                    </div>
+                    
+                    <p>Have 3-4 students share briefly.</p>
+                </div>
+            </div>
+            
+            <!-- Assessment & Support Section -->
+            <div class="day-section">
+                <div class="day-header">
+                    <h2>📋 Assessment & Differentiation</h2>
+                </div>
+                
+                <h3>Project Assessment Criteria:</h3>
+                
+                <div class="key-concept">
+                    <strong>What You're Looking For:</strong>
+                    
+                    <p><strong>Technical Skills (40%):</strong></p>
+                    <ul>
+                        <li>Successfully loads and filters data</li>
+                        <li>Creates appropriate visualizations</li>
+                        <li>Code runs without major errors</li>
+                        <li>Uses techniques learned in class</li>
+                    </ul>
+                    
+                    <p><strong>Analysis Quality (40%):</strong></p>
+                    <ul>
+                        <li>Clear research question</li>
+                        <li>Appropriate data and metrics chosen</li>
+                        <li>Insights are meaningful and well-explained</li>
+                        <li>Conclusion answers the research question</li>
+                    </ul>
+                    
+                    <p><strong>Presentation (20%):</strong></p>
+                    <ul>
+                        <li>Clear communication</li>
+                        <li>Good pacing and organization</li>
+                        <li>Confident delivery</li>
+                        <li>Responds well to questions</li>
+                    </ul>
+                </div>
+                
+                <h3>Differentiation Strategies:</h3>
+                
+                <p><strong>For Struggling Students:</strong></p>
+                <ul>
+                    <li>Provide more scaffolded templates with fill-in-the-blank sections</li>
+                    <li>Reduce requirements to 1 visualization minimum</li>
+                    <li>Allow Option C (Personal Tracker) with simpler data</li>
+                    <li>Offer one-on-one troubleshooting time</li>
+                    <li>Pair with a buddy for support</li>
+                </ul>
+                
+                <p><strong>For Advanced Students:</strong></p>
+                <ul>
+                    <li>Encourage multiple visualization types</li>
+                    <li>Challenge them to use correlation analysis</li>
+                    <li>Ask them to compare across multiple seasons</li>
+                    <li>Have them mentor struggling classmates</li>
+                    <li>Introduce additional advanced metrics</li>
+                </ul>
+                
+                <p><strong>For Students Who Finish Early:</strong></p>
+                <ul>
+                    <li>Improve visualization aesthetics (colors, labels, titles)</li>
+                    <li>Add a third or fourth chart</li>
+                    <li>Calculate additional advanced metrics</li>
+                    <li>Write a more detailed analysis</li>
+                    <li>Create an "executive summary" of findings</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Week 5 Complete! 🎉</strong></p>
+            <p>Students have completed independent projects applying all skills from Weeks 1-4.</p>
+            <p>Next week: Final presentations and career pathways discussion!</p>
+            <p><em>Created by David Adade</em></p>
+        </footer>
+    </div>
+</body>
+</html>

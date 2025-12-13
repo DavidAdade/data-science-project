@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Data Analytics Curriculum - David Adade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header .subtitle {
+            font-size: 1.4em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+        
+        header .author {
+            font-size: 1.1em;
+            opacity: 0.85;
+            font-style: italic;
+        }
+        
+        .intro {
+            padding: 40px;
+            background: #f8f9fa;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .intro h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .intro p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .week-section {
+            margin-bottom: 50px;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .week-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .week-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a4191 100%);
+        }
+        
+        .week-title {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        
+        .week-sessions {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .week-content {
+            padding: 30px;
+            background: #fafbfc;
+        }
+        
+        .session-group {
+            margin-bottom: 25px;
+        }
+        
+        .session-group h4 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .link-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-left-color: #764ba2;
+        }
+        
+        .link-card .title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #1e3c72;
+        }
+        
+        .link-card .description {
+            font-size: 0.95em;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .link-card .icon {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .badge-instructor {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .badge-student {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+        
+        footer {
+            background: #1e3c72;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .credits {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .week-title {
+                font-size: 1.3em;
+            }
+            
+            .link-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏀 Sports Data Analytics Curriculum 📊</h1>
+            <p class="subtitle">A 6-Week Program for High School Athletes</p>
+            <p class="author">Python • Data Analysis • Visualization</p>
+        </header>
+        
+        <div class="intro">
+            <h2>About This Curriculum</h2>
+            <p><strong>Target Audience:</strong> High school athletes in Ontario with zero coding experience</p>
+            <p><strong>Format:</strong> 6 weeks, 2 sessions per week (1.5 hours each)</p>
+            <p><strong>Tools:</strong> Google Colab (free, browser-based), Python with Pandas & Matplotlib</p>
+            <p><strong>Philosophy:</strong> Sports first, code second - every concept connects to real athletic performance</p>
+        </div>
+        
+        <div class="content">
+            <!-- Week 1 -->
+            <div class="week-section">
+                <div class="week-header">
+                    <div>
+                        <div class="week-title">Week 1: Introduction to Programming</div>
+                        <div class="week-sessions">Sessions 1-2 | Basics of Python & Sports Analytics</div>
+                    </div>
+                </div>
+                <div class="week-content">
+                    <div class="session-group">
+                        <h4>📚 Day 1: The Numbers Game</h4>
+                        <div class="link-grid">
+                            <a href="week1/week1-instructor-copy.html" class="link-card">
+                                <div class="icon">📖</div>
+                                <div class="title">Instructor Curriculum <span class="badge badge-instructor">For Teachers</span></div>
+                                <div class="description">Complete lesson plan with timing, activities, and teaching notes</div>
+                            </a>
+                            <a href="week1/week1-day1-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Projector-ready slides for classroom instruction</div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="session-group">
+                        <h4>📚 Day 2: Your First Real Code</h4>
+                        <div class="link-grid">
+                            <a href="week1/week1-day2-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Variables, calculations, and sports statistics</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 2 -->
+            <div class="week-section">
+                <div class="week-header">
+                    <div>
+                        <div class="week-title">Week 2: Working with Real Sports Data</div>
+                        <div class="week-sessions">Sessions 3-4 | Loading, Filtering & Sorting Data</div>
+                    </div>
+                </div>
+                <div class="week-content">
+                    <div class="session-group">
+                        <h4>📚 Day 1: Loading Real Data</h4>
+                        <div class="link-grid">
+                            <a href="week2/week2-instructor-copy.html" class="link-card">
+                                <div class="icon">📖</div>
+                                <div class="title">Instructor Curriculum <span class="badge badge-instructor">For Teachers</span></div>
+                                <div class="description">CSV files, Pandas, and exploring datasets</div>
+                            </a>
+                            <a href="week2/week2-day1-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Introduction to real NBA data</div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="session-group">
+                        <h4>📚 Day 2: Finding and Filtering Data</h4>
+                        <div class="link-grid">
+                            <a href="week2/week2-day2-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Filtering, sorting, and finding insights</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 3 -->
+            <div class="week-section">
+                <div class="week-header">
+                    <div>
+                        <div class="week-title">Week 3: Calculations & Visualizations</div>
+                        <div class="week-sessions">Sessions 5-6 | Advanced Metrics & Charts</div>
+                    </div>
+                </div>
+                <div class="week-content">
+                    <div class="session-group">
+                        <h4>📚 Day 1: Creating Calculated Columns</h4>
+                        <div class="link-grid">
+                            <a href="week3/week3-instructor-copy.html" class="link-card">
+                                <div class="icon">📖</div>
+                                <div class="title">Instructor Curriculum <span class="badge badge-instructor">For Teachers</span></div>
+                                <div class="description">Advanced metrics like TS%, USG%, PPM</div>
+                            </a>
+                            <a href="week3/week3-day1-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Building professional-level analytics</div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="session-group">
+                        <h4>📚 Day 2: Data Visualization</h4>
+                        <div class="link-grid">
+                            <a href="week3/week3-day2-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Bar charts, scatter plots, and heatmaps</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 4 -->
+            <div class="week-section">
+                <div class="week-header">
+                    <div>
+                        <div class="week-title">Week 4: Correlation Analysis & Project Planning</div>
+                        <div class="week-sessions">Sessions 7-8 | Finding Relationships in Data</div>
+                    </div>
+                </div>
+                <div class="week-content">
+                    <div class="session-group">
+                        <h4>📚 Day 1: Understanding Correlation</h4>
+                        <div class="link-grid">
+                            <a href="week4/week4-day1-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Correlation coefficients, matrices, and causation</div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="session-group">
+                        <h4>📚 Day 2: Project Planning</h4>
+                        <div class="link-grid">
+                            <a href="week4/week4-day2-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">12 Slides</span></div>
+                                <div class="description">Research questions and project templates</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 5 -->
+            <div class="week-section">
+                <div class="week-header">
+                    <div>
+                        <div class="week-title">Week 5: Independent Project Work</div>
+                        <div class="week-sessions">Sessions 9-10 | Becoming the Analyst</div>
+                    </div>
+                </div>
+                <div class="week-content">
+                    <div class="session-group">
+                        <h4>📚 Both Days: Project Work & Presentations</h4>
+                        <div class="link-grid">
+                            <a href="week5/sports-analytics-week5.html" class="link-card">
+                                <div class="icon">📖</div>
+                                <div class="title">Instructor Curriculum <span class="badge badge-instructor">For Teachers</span></div>
+                                <div class="description">Project options, work time, and presentation prep</div>
+                            </a>
+                            <a href="week5/week5-student-presentation.html" class="link-card">
+                                <div class="icon">🎯</div>
+                                <div class="title">Student Presentation <span class="badge badge-student">8 Slides</span></div>
+                                <div class="description">Project guidelines and presentation structure</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Week 6 Placeholder -->
+            <div class="week-section">
+                <div class="week-header">
+                    <div>
+                        <div class="week-title">Week 6: Final Presentations & Career Pathways</div>
+                        <div class="week-sessions">Sessions 11-12 | Showcase & Future Opportunities</div>
+                    </div>
+                </div>
+                <div class="week-content">
+                    <p style="text-align: center; color: #666; font-style: italic;">Materials coming soon...</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>📊 Sports Data Analytics Curriculum</p>
+            <p>Empowering student athletes through data literacy</p>
+            <p class="credits">Created by David Adade</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">Python • Pandas • Matplotlib • Google Colab</p>
+        </footer>
+    </div>
+</body>
+</html>

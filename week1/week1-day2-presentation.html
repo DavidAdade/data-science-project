@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Day 2: Your First Real Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h2 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h3 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        p {
+            font-size: 1.8em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .subtitle {
+            font-size: 2em;
+            opacity: 0.9;
+            font-style: italic;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        .emoji {
+            font-size: 5em;
+            margin: 30px 0;
+            animation: bounce 2s infinite;
+        }
+        
+        ul {
+            text-align: left;
+            display: inline-block;
+            font-size: 1.8em;
+            line-height: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        ul li {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        
+        .big-question {
+            font-size: 2.5em;
+            background: rgba(255,255,255,0.2);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 3px solid rgba(255,255,255,0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        .highlight {
+            background: rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .code-preview {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            text-align: left;
+            margin: 30px auto;
+            max-width: 900px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 1.2em;
+            background: rgba(0,0,0,0.5);
+            padding: 15px 25px;
+            border-radius: 30px;
+            z-index: 1000;
+        }
+        
+        .slide-number {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 1.2em;
+            background: rgba(0,0,0,0.5);
+            padding: 15px 25px;
+            border-radius: 30px;
+            color: white;
+            z-index: 1000;
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.6);
+            z-index: 1000;
+            font-style: italic;
+        }
+        
+        /* Darker slide backgrounds for better readability */
+        .slide-1 { background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+        .slide-2 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+        .slide-3 { background: linear-gradient(135deg, #232526 0%, #414345 100%); }
+        .slide-4 { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+        .slide-5 { background: linear-gradient(135deg, #134e5e 0%, #71b280 100%); }
+        .slide-6 { background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); }
+        .slide-7 { background: linear-gradient(135deg, #1c92d2 0%, #f2fcfe 100%); color: #000; }
+        .slide-8 { background: linear-gradient(135deg, #373b44 0%, #4286f4 100%); }
+        .slide-9 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+        .slide-10 { background: linear-gradient(135deg, #141e30 0%, #243b55 100%); }
+        .slide-11 { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+        .slide-12 { background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+        
+        /* Special styling for slide 7 with lighter background */
+        .slide-7 h2, .slide-7 p, .slide-7 .highlight {
+            color: #000;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        .slide-7 .code-preview {
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .column-item {
+            background: rgba(255,255,255,0.15);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .column-item h3 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .variable-box {
+            background: rgba(255,255,255,0.2);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px auto;
+            text-align: center;
+            max-width: 400px;
+            border: 3px solid rgba(255,255,255,0.4);
+        }
+        
+        .variable-box .label {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .variable-box .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .step-list {
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .step-list li {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active slide-1">
+            <div class="slide-content">
+                <div class="emoji">💻🔥📊</div>
+                <h1>Your First Real Code</h1>
+                <p class="subtitle">Week 1, Day 2: Building Your Analyst Toolkit</p>
+                <p style="margin-top: 50px; font-size: 1.5em;">From numbers to insights</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Today's Goals -->
+        <div class="slide slide-2">
+            <div class="slide-content">
+                <h2>Today We're Learning</h2>
+                <ul>
+                    <li>📦 Variables = containers for your data</li>
+                    <li>➕ Do math with code</li>
+                    <li>🏀 Calculate REAL sports statistics</li>
+                    <li>⭐ Analyze YOUR performance data</li>
+                </ul>
+                <p style="margin-top: 60px; font-size: 1.5em;">By the end of today, you'll calculate stats like a pro analyst!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Quick Review -->
+        <div class="slide slide-3">
+            <div class="slide-content">
+                <h2>Quick Review! 🧠</h2>
+                <div style="margin-top: 50px;">
+                    <div class="big-question" style="font-size: 2em;">
+                        What does data analytics mean?
+                    </div>
+                    <div class="big-question" style="font-size: 2em;">
+                        What tool are we using to write code?
+                    </div>
+                    <div class="big-question" style="font-size: 2em;">
+                        What command displays text?
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: What are Variables -->
+        <div class="slide slide-4">
+            <div class="slide-content">
+                <h2>What is a Variable? 📦</h2>
+                <div class="highlight" style="font-size: 2em; margin: 40px 0;">
+                    Variable = A named container that stores information
+                </div>
+                <p style="font-size: 1.8em; margin-top: 50px;">Think of it like a labeled box that holds your data</p>
+                <div class="two-column" style="margin-top: 60px;">
+                    <div class="variable-box">
+                        <div class="label">Box Label: "points"</div>
+                        <div class="value">24</div>
+                    </div>
+                    <div class="variable-box">
+                        <div class="label">Box Label: "player_name"</div>
+                        <div class="value">LeBron</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Creating Variables -->
+        <div class="slide slide-5">
+            <div class="slide-content">
+                <h2>Let's Create Our First Variable!</h2>
+                <p style="font-size: 1.6em; margin-bottom: 30px;">Type this in Google Colab:</p>
+                <div class="code-preview">
+<div class="code-comment"># Create a variable</div>
+points = 15
+
+<div class="code-comment"># Display the variable</div>
+print(points)
+</div>
+                <div style="margin-top: 50px;">
+                    <p style="font-size: 1.6em;"><strong>Breaking it down:</strong></p>
+                    <p style="font-size: 1.5em;"><code>points</code> = name of our container</p>
+                    <p style="font-size: 1.5em;"><code>=</code> means "store this value"</p>
+                    <p style="font-size: 1.5em;"><code>15</code> = the value we're storing</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Different Types of Variables -->
+        <div class="slide slide-6">
+            <div class="slide-content">
+                <h2>Different Types of Data</h2>
+                <div class="code-preview">
+    <div class="code-comment"># Numbers (integers)</div>
+    <div>rebounds = 8</div>
+    <div>assists = 5</div>
+    <div></div>
+    
+    <div class="code-comment"># Text (strings - always use quotes)</div>
+    <div>player_name = "Maya"</div>
+    <div>team = "Eagles"</div>
+    <div></div>
+    
+    <div class="code-comment"># Decimal numbers (floats)</div>
+    <div>shooting_percentage = 0.456</div>
+    <div></div>
+    
+    <div class="code-comment"># Display them</div>
+    <div>print(player_name)</div>
+    <div>print("Rebounds:", rebounds)</div>
+</div>
+                <p style="margin-top: 30px; font-size: 1.5em;">💡 Text needs quotes. Numbers don't.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Math Operations -->
+        <div class="slide slide-7">
+            <div class="slide-content">
+                <h2>Math with Code! ➕➖✖️➗</h2>
+                <p style="font-size: 1.6em; margin-bottom: 30px;">Python can do math just like a calculator:</p>
+                <div class="code-preview">
+    <div class="code-comment"># Python can do math!</div>
+    <div></div>
+    
+    <div class="code-comment"># Addition</div>
+    <div>print(10 + 5)</div>
+    <div></div>
+    
+    <div class="code-comment"># Subtraction</div>
+    <div>print(20 - 7)</div>
+    <div></div>
+    
+    <div class="code-comment"># Multiplication</div>
+    <div>print(6 * 4)</div>
+    <div></div>
+    
+    <div class="code-comment"># Division</div>
+    <div>print(50 / 2)</div>
+</div>
+                <p style="margin-top: 40px; font-size: 1.6em;">Now we can use this for SPORTS STATS! 🏀</p>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Points Per Game -->
+        <div class="slide slide-8">
+            <div class="slide-content">
+                <h2>Calculate Points Per Game 🏀</h2>
+                <p style="font-size: 1.6em; margin-bottom: 20px;">This is what NBA analysts do!</p>
+                <div class="code-preview">
+<span class="code-comment"># Season statistics for a player</span>
+total_points = 187
+games_played = 10
+
+<span class="code-comment"># Calculate average points per game</span>
+points_per_game = total_points / games_played
+
+<span class="code-comment"># Display the result</span>
+print("Points per game:", points_per_game)
+                </div>
+                <p style="margin-top: 40px; font-size: 1.8em;">⚡ You just did what pro analysts do!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 9: More Sports Stats -->
+        <div class="slide slide-9">
+            <div class="slide-content">
+                <h2>More Real Sports Calculations 📊</h2>
+                <div class="code-preview" style="font-size: 1.3em;">
+<span class="code-comment"># Basketball shooting percentage</span>
+shots_made = 45
+shots_taken = 100
+shooting_percentage = (shots_made / shots_taken) * 100
+print("Shooting %:", shooting_percentage, "%")
+
+<span class="code-comment"># Soccer goals per game</span>
+total_goals = 12
+games = 8
+goals_per_game = total_goals / games
+print("Goals per game:", goals_per_game)
+
+<span class="code-comment"># Track: Average race time</span>
+race1 = 12.5
+race2 = 12.3
+race3 = 12.7
+average_time = (race1 + race2 + race3) / 3
+print("Average time:", average_time, "seconds")
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Your Turn -->
+        <div class="slide slide-10">
+            <div class="slide-content">
+                <h2>Your Turn: Personalize It! ⭐</h2>
+                <p style="font-size: 1.8em; margin-bottom: 30px;">Use YOUR sport and YOUR stats!</p>
+                <div class="code-preview">
+<span class="code-comment"># MY SPORTS STATISTICS</span>
+player_name = "YOUR NAME"
+sport = "YOUR SPORT"
+
+<span class="code-comment"># Your stats from 3 games</span>
+game1 = 0
+game2 = 0
+game3 = 0
+
+<span class="code-comment"># Calculate your average</span>
+average = (game1 + game2 + game3) / 3
+
+<span class="code-comment"># Display results</span>
+print(player_name, "plays", sport)
+print("Average performance:", average)
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Challenge -->
+        <div class="slide slide-11">
+            <div class="slide-content">
+                <h2>Stretch Challenge 🚀</h2>
+                <p style="font-size: 1.8em; margin-bottom: 30px;">For those who finish early:</p>
+                <div class="code-preview">
+<span class="code-comment"># Calculate improvement</span>
+improvement = game3 - game1
+print("Improvement:", improvement)
+
+<span class="code-comment"># Calculate total</span>
+total = game1 + game2 + game3
+print("Total:", total)
+
+<span class="code-comment"># Find your best game</span>
+best_game = max(game1, game2, game3)
+print("Best game:", best_game)
+                </div>
+                <p style="margin-top: 30px; font-size: 1.5em;">💡 Try calculating different stats from YOUR sport!</p>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Wrap Up -->
+        <div class="slide slide-12">
+            <div class="slide-content">
+                <h2>Today's Big Wins! 🏆</h2>
+                <ul style="font-size: 2em;">
+                    <li>✅ Learned what variables are</li>
+                    <li>✅ Used code to do math</li>
+                    <li>✅ Calculated real sports statistics</li>
+                    <li>✅ Analyzed YOUR performance</li>
+                </ul>
+                <div style="margin-top: 60px;">
+                    <p style="font-size: 2em;"><strong>Next Week:</strong></p>
+                    <p style="font-size: 1.6em;">We'll work with HUNDREDS of athletes' data at once!</p>
+                    <p style="font-size: 1.6em;">Load real NBA, NHL, and soccer datasets 🔥</p>
+                </div>
+                <div class="emoji" style="margin-top: 40px;">🎉💪📈</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        ← → to navigate | Click anywhere to advance
+    </div>
+    
+    <div class="slide-number">
+        <span id="current-slide">1</span> / <span id="total-slides">12</span>
+    </div>
+    
+    <div class="watermark">
+        Created by David Adade
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        // Click to advance
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navigation')) {
+                nextSlide();
+            }
+        });
+    </script>
+</body>
+</html>
