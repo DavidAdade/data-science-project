@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python & Pandas Cheat Sheet</title>
+    <style>
+        @page { size: letter; margin: 0.4in; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 11px;
+            color: #1a1a1a;
+            width: 7.5in;
+            margin: 0 auto;
+            padding: 0.3in;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a5276;
+            border-bottom: 3px solid #1a5276;
+            padding-bottom: 4px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .section {
+            border: 1.5px solid #2c3e50;
+            border-radius: 6px;
+            padding: 6px 8px;
+            background: #f8f9fa;
+        }
+        .section h2 {
+            font-size: 12px;
+            color: white;
+            background: #2c3e50;
+            margin: -6px -8px 5px -8px;
+            padding: 3px 8px;
+            border-radius: 4px 4px 0 0;
+        }
+        .section.blue h2 { background: #2980b9; }
+        .section.green h2 { background: #27ae60; }
+        .section.purple h2 { background: #8e44ad; }
+        .section.orange h2 { background: #d35400; }
+        .section.red h2 { background: #c0392b; }
+        .section.teal h2 { background: #16a085; }
+        code {
+            font-family: 'Courier New', monospace;
+            background: #ecf0f1;
+            padding: 1px 3px;
+            border-radius: 3px;
+            font-size: 10.5px;
+        }
+        .row { margin-bottom: 3px; line-height: 1.4; }
+        .label { font-weight: bold; color: #2c3e50; }
+        .full-width { grid-column: 1 / -1; }
+        .two-col-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 6px;
+            font-size: 9px;
+            color: #7f8c8d;
+        }
+        @media print {
+            body { padding: 0; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Python & Pandas Cheat Sheet - NBA Data Science</h1>
+
+<div class="grid">
+
+    <div class="section blue">
+        <h2>1. Setup - Always Start With This</h2>
+        <div class="row"><code>import pandas as pd</code></div>
+        <div class="row"><code>import matplotlib.pyplot as plt</code></div>
+        <div class="row" style="margin-top:4px;"><code>url = 'https://raw.githubusercontent.com/DavidAdade/data-science-project/main/files/nba_stats.csv'</code></div>
+        <div class="row"><code>df = pd.read_csv(url)</code></div>
+    </div>
+
+    <div class="section green">
+        <h2>2. Looking at Your Data</h2>
+        <div class="row"><code>df.head()</code> - first 5 rows</div>
+        <div class="row"><code>df.head(10)</code> - first 10 rows</div>
+        <div class="row"><code>df.shape</code> - (rows, columns)</div>
+        <div class="row"><code>df.columns</code> - list all column names</div>
+        <div class="row"><code>df.describe()</code> - stats summary</div>
+        <div class="row"><code>print(df[['Player', 'PTS']])</code> - show specific columns</div>
+    </div>
+
+    <div class="section purple">
+        <h2>3. Filtering Data</h2>
+        <div class="row"><span class="label">One condition:</span></div>
+        <div class="row"><code>df[df['PTS'] > 20]</code></div>
+        <div class="row"><span class="label">By team name:</span></div>
+        <div class="row"><code>df[df['Team'] == 'TOR']</code></div>
+        <div class="row"><span class="label">Two conditions (AND = &amp;):</span></div>
+        <div class="row"><code>df[(df['PTS'] > 20) &amp; (df['MIN'] > 30)]</code></div>
+        <div class="row"><span class="label">Either condition (OR = |):</span></div>
+        <div class="row"><code>df[(df['Team'] == 'LAL') | (df['Team'] == 'BOS')]</code></div>
+    </div>
+
+    <div class="section orange">
+        <h2>4. Sorting &amp; New Columns</h2>
+        <div class="row"><span class="label">Sort highest to lowest:</span></div>
+        <div class="row"><code>df.sort_values('PTS', ascending=False)</code></div>
+        <div class="row"><span class="label">Sort lowest to highest:</span></div>
+        <div class="row"><code>df.sort_values('PTS', ascending=True)</code></div>
+        <div class="row"><span class="label">Top 10 of sorted:</span></div>
+        <div class="row"><code>df.sort_values('PTS', ascending=False).head(10)</code></div>
+        <div class="row"><span class="label">Create new column:</span></div>
+        <div class="row"><code>df['PPM'] = df['PTS'] / df['MIN']</code></div>
+    </div>
+
+    <div class="section red">
+        <h2>5. Bar Chart</h2>
+        <div class="row"><code>plt.figure(figsize=(10, 5))</code></div>
+        <div class="row"><code>plt.bar(df['Player'], df['PTS'], color='blue')</code></div>
+        <div class="row"><code>plt.xlabel('Player')</code></div>
+        <div class="row"><code>plt.ylabel('Points')</code></div>
+        <div class="row"><code>plt.title('Top Scorers')</code></div>
+        <div class="row"><code>plt.xticks(rotation=45, ha='right')</code></div>
+        <div class="row"><code>plt.tight_layout()</code></div>
+        <div class="row"><code>plt.show()</code></div>
+    </div>
+
+    <div class="section teal">
+        <h2>6. Scatter Plot</h2>
+        <div class="row"><code>plt.figure(figsize=(8, 5))</code></div>
+        <div class="row"><code>plt.scatter(df['PTS'], df['AST'],</code></div>
+        <div class="row"><code>&nbsp;&nbsp;&nbsp;&nbsp;alpha=0.5, color='purple')</code></div>
+        <div class="row"><code>plt.xlabel('Points')</code></div>
+        <div class="row"><code>plt.ylabel('Assists')</code></div>
+        <div class="row"><code>plt.title('Points vs Assists')</code></div>
+        <div class="row"><code>plt.grid(True, alpha=0.3)</code></div>
+        <div class="row"><code>plt.tight_layout()</code></div>
+        <div class="row"><code>plt.show()</code></div>
+    </div>
+
+    <div class="section full-width" style="border-color: #2c3e50;">
+        <h2>7. Quick Reference - Common Patterns</h2>
+        <div class="two-col-inner">
+            <div>
+                <div class="row"><span class="label">Filter then graph:</span></div>
+                <div class="row"><code>top = df[df['MIN'] >= 25]</code></div>
+                <div class="row"><code>top = top.sort_values('PTS', ascending=False).head(10)</code></div>
+                <div class="row"><code>plt.bar(top['Player'], top['PTS'])</code></div>
+            </div>
+            <div>
+                <div class="row"><span class="label">Team averages:</span></div>
+                <div class="row"><code>team_avg = df.groupby('Team')['PTS'].mean()</code></div>
+                <div class="row"><span class="label">Horizontal bar chart:</span></div>
+                <div class="row"><code>plt.barh(team_avg.index, team_avg.values)</code></div>
+            </div>
+        </div>
+        <div style="margin-top: 5px; border-top: 1px dashed #bdc3c7; padding-top: 4px;">
+            <div class="two-col-inner">
+                <div>
+                    <div class="row"><span class="label">Colors you can use:</span> <code>'blue'</code> <code>'red'</code> <code>'green'</code> <code>'purple'</code> <code>'orange'</code> <code>'gold'</code> <code>'dodgerblue'</code> <code>'skyblue'</code></div>
+                </div>
+                <div>
+                    <div class="row"><span class="label">Common symbols:</span> <code>></code> greater &nbsp; <code><</code> less &nbsp; <code>==</code> equals &nbsp; <code>>=</code> at least &nbsp; <code>!=</code> not equal</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">Created by David Adade for Rise in STEM | Python Data Science Course | Keep this sheet handy!</div>
+
+</body>
+</html>

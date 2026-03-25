@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Cheat Sheets - NBA Data Science</title>
+    <style>
+        @page { size: letter; margin: 0.4in; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 11px;
+            color: #1a1a1a;
+            width: 7.5in;
+            margin: 0 auto;
+            padding: 0.3in;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a5276;
+            border-bottom: 3px solid #1a5276;
+            padding-bottom: 4px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .section {
+            border: 1.5px solid #2c3e50;
+            border-radius: 6px;
+            padding: 6px 8px;
+            background: #f8f9fa;
+        }
+        .section h2 {
+            font-size: 12px;
+            color: white;
+            margin: -6px -8px 5px -8px;
+            padding: 3px 8px;
+            border-radius: 4px 4px 0 0;
+        }
+        .blue h2 { background: #2980b9; }
+        .green h2 { background: #27ae60; }
+        .purple h2 { background: #8e44ad; }
+        .orange h2 { background: #d35400; }
+        .red h2 { background: #c0392b; }
+        .teal h2 { background: #16a085; }
+        .dark h2 { background: #2c3e50; }
+        code {
+            font-family: 'Courier New', monospace;
+            background: #ecf0f1;
+            padding: 1px 3px;
+            border-radius: 3px;
+            font-size: 10.5px;
+        }
+        .row { margin-bottom: 3px; line-height: 1.4; }
+        .explain { color: #555; font-style: italic; font-size: 10px; margin-left: 10px; }
+        .label { font-weight: bold; color: #2c3e50; }
+        .full-width { grid-column: 1 / -1; }
+        .two-col-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 12px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 6px;
+            font-size: 9px;
+            color: #7f8c8d;
+        }
+        .arrow { color: #27ae60; font-weight: bold; }
+        .page-break {
+            page-break-after: always;
+            break-after: page;
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+        @media print {
+            body { padding: 0; }
+            .section { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===================== PAGE 1: PYTHON BASICS ===================== -->
+
+<h1>Page 1: Python Basics - What Does This Code Actually Do?</h1>
+
+<div class="grid">
+
+    <div class="section blue">
+        <h2>1. Variables - Storing Information</h2>
+        <div class="row">A variable is a <strong>name</strong> that holds a <strong>value</strong>. Like a labeled box.</div>
+        <div class="row" style="margin-top:4px;"><code>player = "LeBron James"</code></div>
+        <div class="explain">Stores the text "LeBron James" in a box called player</div>
+        <div class="row"><code>points = 25</code></div>
+        <div class="explain">Stores the number 25 in a box called points</div>
+        <div class="row"><code>fg_pct = 0.52</code></div>
+        <div class="explain">Stores a decimal number (called a float)</div>
+        <div class="row" style="margin-top:4px;"><span class="label">Rules:</span> No spaces in names. Can't start with a number. Case sensitive (<code>pts</code> and <code>PTS</code> are different).</div>
+    </div>
+
+    <div class="section green">
+        <h2>2. Data Types - Kinds of Information</h2>
+        <div class="row"><code>"hello"</code> <span class="arrow">→</span> <strong>String</strong> (text, always in quotes)</div>
+        <div class="row"><code>25</code> <span class="arrow">→</span> <strong>Integer</strong> (whole number)</div>
+        <div class="row"><code>0.52</code> <span class="arrow">→</span> <strong>Float</strong> (decimal number)</div>
+        <div class="row"><code>True</code> / <code>False</code> <span class="arrow">→</span> <strong>Boolean</strong> (yes or no)</div>
+        <div class="row" style="margin-top:4px;"><span class="label">Why it matters:</span></div>
+        <div class="row"><code>"5" + "3"</code> <span class="arrow">→</span> <code>"53"</code> (joins text together)</div>
+        <div class="row"><code>5 + 3</code> <span class="arrow">→</span> <code>8</code> (does math)</div>
+        <div class="explain">Quotes make it text. No quotes = a number.</div>
+    </div>
+
+    <div class="section purple">
+        <h2>3. print() - Showing Results</h2>
+        <div class="row"><code>print()</code> displays things on screen. Without it, nothing shows up!</div>
+        <div class="row" style="margin-top:4px;"><code>print("Hello")</code> <span class="arrow">→</span> Hello</div>
+        <div class="row"><code>print(points)</code> <span class="arrow">→</span> 25</div>
+        <div class="row"><code>print("Points:", points)</code> <span class="arrow">→</span> Points: 25</div>
+        <div class="explain">Comma lets you print text and variables together</div>
+        <div class="row" style="margin-top:3px;"><span class="label">f-string (fancy way):</span></div>
+        <div class="row"><code>print(f"{player} scored {points}")</code></div>
+        <div class="explain">→ LeBron James scored 25</div>
+        <div class="explain">The f before the quote lets you put variables inside {}</div>
+    </div>
+
+    <div class="section orange">
+        <h2>4. Math Operators</h2>
+        <div class="row"><code>+</code> Add &nbsp;&nbsp; <code>-</code> Subtract &nbsp;&nbsp; <code>*</code> Multiply &nbsp;&nbsp; <code>/</code> Divide</div>
+        <div class="row" style="margin-top:4px;"><span class="label">Examples with NBA data:</span></div>
+        <div class="row"><code>ppg = total_points / games</code></div>
+        <div class="explain">Calculate points per game</div>
+        <div class="row"><code>ppm = pts / minutes</code></div>
+        <div class="explain">Calculate points per minute</div>
+        <div class="row" style="margin-top:3px;"><span class="label">Order of operations:</span> Same as math class!</div>
+        <div class="row"><code>(a + b) * c</code> <span class="arrow">→</span> brackets first, then multiply</div>
+    </div>
+
+    <div class="section red">
+        <h2>5. Comparison Operators - Asking Questions</h2>
+        <div class="row">These return <code>True</code> or <code>False</code>. Used for filtering!</div>
+        <div class="row" style="margin-top:4px;">
+            <code>></code> greater than &nbsp;&nbsp;
+            <code><</code> less than
+        </div>
+        <div class="row">
+            <code>>=</code> greater than or equal &nbsp;&nbsp;
+            <code><=</code> less than or equal
+        </div>
+        <div class="row">
+            <code>==</code> equals (is it the same?) &nbsp;&nbsp;
+            <code>!=</code> not equal
+        </div>
+        <div class="row" style="margin-top:3px;"><span class="label">Warning:</span> <code>=</code> sets a value. <code>==</code> checks a value.</div>
+        <div class="row"><code>points = 25</code> <span class="arrow">→</span> "set points to 25"</div>
+        <div class="row"><code>points == 25</code> <span class="arrow">→</span> "is points equal to 25?" (True)</div>
+    </div>
+
+    <div class="section teal">
+        <h2>6. import - Getting Superpowers</h2>
+        <div class="row"><code>import</code> loads a <strong>library</strong> (code someone else wrote for you).</div>
+        <div class="row" style="margin-top:4px;"><code>import pandas as pd</code></div>
+        <div class="explain">Loads pandas (data tool). "as pd" is a nickname so you type less.</div>
+        <div class="row"><code>import matplotlib.pyplot as plt</code></div>
+        <div class="explain">Loads matplotlib (graphing tool). Nickname: plt</div>
+        <div class="row" style="margin-top:3px;"><span class="label">Why nicknames?</span></div>
+        <div class="row">Instead of <code>pandas.read_csv()</code> you just type <code>pd.read_csv()</code></div>
+        <div class="explain">Same thing, less typing!</div>
+    </div>
+
+    <div class="section full-width dark">
+        <h2>7. Putting It All Together - Reading Real Code Line by Line</h2>
+        <div class="two-col-inner">
+            <div>
+                <div class="row"><span class="label">The Code:</span></div>
+                <div class="row"><code>import pandas as pd</code></div>
+                <div class="row"><code>url = 'https://raw...nba_stats.csv'</code></div>
+                <div class="row"><code>df = pd.read_csv(url)</code></div>
+                <div class="row"><code>stars = df[df['PTS'] > 20]</code></div>
+                <div class="row"><code>print(stars[['Player', 'PTS']])</code></div>
+            </div>
+            <div>
+                <div class="row"><span class="label">What It Means (in English):</span></div>
+                <div class="row">Load the pandas toolkit</div>
+                <div class="row">Store the web address of our data file</div>
+                <div class="row">Read that CSV file, store it in a table called df</div>
+                <div class="row">Keep only rows where points is more than 20</div>
+                <div class="row">Show me the Player name and Points columns</div>
+            </div>
+        </div>
+        <div style="margin-top: 5px; border-top: 1px dashed #bdc3c7; padding-top: 4px;">
+            <div class="two-col-inner">
+                <div>
+                    <div class="row"><span class="label">Common mistakes:</span></div>
+                    <div class="row">Forgetting quotes around text: <code>"TOR"</code> not <code>TOR</code></div>
+                    <div class="row">Using <code>=</code> instead of <code>==</code> when comparing</div>
+                </div>
+                <div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">Forgetting parentheses: <code>print()</code> not <code>print</code></div>
+                    <div class="row">Spelling the column name wrong (copy-paste is your friend!)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">Created by David Adade for Rise in STEM | Python Data Science Course</div>
+
+<!-- PAGE BREAK -->
+<div class="page-break"></div>
+
+<!-- ===================== PAGE 2: PANDAS & GRAPHING ===================== -->
+
+<h1>Page 2: Pandas & Graphing Cheat Sheet - NBA Data Science</h1>
+
+<div class="grid">
+
+    <div class="section blue">
+        <h2>1. Setup - Always Start With This</h2>
+        <div class="row"><code>import pandas as pd</code></div>
+        <div class="row"><code>import matplotlib.pyplot as plt</code></div>
+        <div class="row" style="margin-top:4px;"><code>url = 'https://raw.githubusercontent.com/DavidAdade/data-science-project/main/files/nba_stats.csv'</code></div>
+        <div class="row"><code>df = pd.read_csv(url)</code></div>
+    </div>
+
+    <div class="section green">
+        <h2>2. Looking at Your Data</h2>
+        <div class="row"><code>df.head()</code> - first 5 rows</div>
+        <div class="row"><code>df.head(10)</code> - first 10 rows</div>
+        <div class="row"><code>df.shape</code> - (rows, columns)</div>
+        <div class="row"><code>df.columns</code> - list all column names</div>
+        <div class="row"><code>df.describe()</code> - stats summary</div>
+        <div class="row"><code>print(df[['Player', 'PTS']])</code> - show specific columns</div>
+    </div>
+
+    <div class="section purple">
+        <h2>3. Filtering Data</h2>
+        <div class="row"><span class="label">One condition:</span></div>
+        <div class="row"><code>df[df['PTS'] > 20]</code></div>
+        <div class="row"><span class="label">By team name:</span></div>
+        <div class="row"><code>df[df['Team'] == 'TOR']</code></div>
+        <div class="row"><span class="label">Two conditions (AND = &amp;):</span></div>
+        <div class="row"><code>df[(df['PTS'] > 20) &amp; (df['MIN'] > 30)]</code></div>
+        <div class="row"><span class="label">Either condition (OR = |):</span></div>
+        <div class="row"><code>df[(df['Team'] == 'LAL') | (df['Team'] == 'BOS')]</code></div>
+    </div>
+
+    <div class="section orange">
+        <h2>4. Sorting &amp; New Columns</h2>
+        <div class="row"><span class="label">Sort highest to lowest:</span></div>
+        <div class="row"><code>df.sort_values('PTS', ascending=False)</code></div>
+        <div class="row"><span class="label">Sort lowest to highest:</span></div>
+        <div class="row"><code>df.sort_values('PTS', ascending=True)</code></div>
+        <div class="row"><span class="label">Top 10 of sorted:</span></div>
+        <div class="row"><code>df.sort_values('PTS', ascending=False).head(10)</code></div>
+        <div class="row"><span class="label">Create new column:</span></div>
+        <div class="row"><code>df['PPM'] = df['PTS'] / df['MIN']</code></div>
+    </div>
+
+    <div class="section red">
+        <h2>5. Bar Chart</h2>
+        <div class="row"><code>plt.figure(figsize=(10, 5))</code></div>
+        <div class="row"><code>plt.bar(df['Player'], df['PTS'], color='blue')</code></div>
+        <div class="row"><code>plt.xlabel('Player')</code></div>
+        <div class="row"><code>plt.ylabel('Points')</code></div>
+        <div class="row"><code>plt.title('Top Scorers')</code></div>
+        <div class="row"><code>plt.xticks(rotation=45, ha='right')</code></div>
+        <div class="row"><code>plt.tight_layout()</code></div>
+        <div class="row"><code>plt.show()</code></div>
+    </div>
+
+    <div class="section teal">
+        <h2>6. Scatter Plot</h2>
+        <div class="row"><code>plt.figure(figsize=(8, 5))</code></div>
+        <div class="row"><code>plt.scatter(df['PTS'], df['AST'],</code></div>
+        <div class="row"><code>&nbsp;&nbsp;&nbsp;&nbsp;alpha=0.5, color='purple')</code></div>
+        <div class="row"><code>plt.xlabel('Points')</code></div>
+        <div class="row"><code>plt.ylabel('Assists')</code></div>
+        <div class="row"><code>plt.title('Points vs Assists')</code></div>
+        <div class="row"><code>plt.grid(True, alpha=0.3)</code></div>
+        <div class="row"><code>plt.tight_layout()</code></div>
+        <div class="row"><code>plt.show()</code></div>
+    </div>
+
+    <div class="section full-width dark">
+        <h2>7. Quick Reference - Common Patterns</h2>
+        <div class="two-col-inner">
+            <div>
+                <div class="row"><span class="label">Filter then graph:</span></div>
+                <div class="row"><code>top = df[df['MIN'] >= 25]</code></div>
+                <div class="row"><code>top = top.sort_values('PTS', ascending=False).head(10)</code></div>
+                <div class="row"><code>plt.bar(top['Player'], top['PTS'])</code></div>
+            </div>
+            <div>
+                <div class="row"><span class="label">Team averages:</span></div>
+                <div class="row"><code>team_avg = df.groupby('Team')['PTS'].mean()</code></div>
+                <div class="row"><span class="label">Horizontal bar chart:</span></div>
+                <div class="row"><code>plt.barh(team_avg.index, team_avg.values)</code></div>
+            </div>
+        </div>
+        <div style="margin-top: 5px; border-top: 1px dashed #bdc3c7; padding-top: 4px;">
+            <div class="two-col-inner">
+                <div>
+                    <div class="row"><span class="label">Colors you can use:</span> <code>'blue'</code> <code>'red'</code> <code>'green'</code> <code>'purple'</code> <code>'orange'</code> <code>'gold'</code> <code>'dodgerblue'</code> <code>'skyblue'</code></div>
+                </div>
+                <div>
+                    <div class="row"><span class="label">Common symbols:</span> <code>></code> greater &nbsp; <code><</code> less &nbsp; <code>==</code> equals &nbsp; <code>>=</code> at least &nbsp; <code>!=</code> not equal</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">Created by David Adade for Rise in STEM | Python Data Science Course | Keep this sheet handy!</div>
+
+</body>
+</html>
