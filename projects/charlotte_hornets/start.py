@@ -86,7 +86,22 @@ print("Total players (2025-26):", len(df_2026))
 # print("2024-25 team avg PTS:", df_2025['PTS'].mean())
 # print("2025-26 team avg PTS:", df_2026['PTS'].mean())
 
-# Hint 9: Who is the best playmaker?
+# Hint 9: Hornets team records across all 3 seasons
+# records = {'2023-24': '21-61', '2024-25': '19-63', '2025-26': '28-46 (in progress)'}
+# seasons = list(records.keys())
+# wins = [21, 19, 28]
+# losses = [61, 63, 46]
+# x = range(len(seasons))
+# plt.bar(x, wins, width=0.4, label='Wins', color='teal')
+# plt.bar([i + 0.4 for i in x], losses, width=0.4, label='Losses', color='gray')
+# plt.xticks([i + 0.2 for i in x], seasons)
+# plt.title('Hornets Win/Loss Record by Season')
+# plt.legend()
+# plt.tight_layout()
+# plt.show()
+# print("Are the Hornets improving? Look at the trend!")
+
+# Hint 10: Who is the best playmaker?
 # df['AST_TO_Ratio'] = df['AST'] / df['TOV']
 # print(df.sort_values('AST_TO_Ratio', ascending=False)[['Player', 'AST', 'TOV', 'AST_TO_Ratio']].head(5))
 
