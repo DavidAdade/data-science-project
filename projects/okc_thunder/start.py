@@ -6,23 +6,31 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# ---- Load the OKC Thunder data ----
-# 2025-26 season (current season!)
-url_new = 'https://raw.githubusercontent.com/DavidAdade/data-science-project/main/projects/okc_thunder/okc_thunder_stats_2025_26.csv'
-df = pd.read_csv(url_new)
+# ---- Load the OKC Thunder data (3 seasons!) ----
+# 2023-24 season
+url_2024 = 'https://raw.githubusercontent.com/DavidAdade/data-science-project/main/projects/okc_thunder/okc_thunder_stats.csv'
+df_2024 = pd.read_csv(url_2024)
 
-# 2023-24 season (original data - use for comparison!)
-url_old = 'https://raw.githubusercontent.com/DavidAdade/data-science-project/main/projects/okc_thunder/okc_thunder_stats.csv'
-df_old = pd.read_csv(url_old)
+# 2024-25 season
+url_2025 = 'https://raw.githubusercontent.com/DavidAdade/data-science-project/main/projects/okc_thunder/okc_thunder_stats_2024_25.csv'
+df_2025 = pd.read_csv(url_2025)
+
+# 2025-26 season (current season, still in progress)
+url_2026 = 'https://raw.githubusercontent.com/DavidAdade/data-science-project/main/projects/okc_thunder/okc_thunder_stats_2025_26.csv'
+df_2026 = pd.read_csv(url_2026)
+
+# Use the most recent completed season by default
+df = df_2025
 
 # ---- Take a look at your data first! ----
-print("OKC Thunder 2025-26 Roster:")
+print("OKC Thunder 2024-25 Roster:")
 print(df.head())
 print()
 print("Columns you can use:", list(df.columns))
 print()
-print("Total players (2025-26):", len(df))
-print("Total players (2023-24):", len(df_old))
+print("Total players (2023-24):", len(df_2024))
+print("Total players (2024-25):", len(df_2025))
+print("Total players (2025-26):", len(df_2026))
 
 
 # ============================================
