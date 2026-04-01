@@ -144,12 +144,28 @@
         <div class="row"><code>plt.ylabel('Assists')</code></div>
         <div class="row"><code>plt.title('Points vs Assists')</code></div>
         <div class="row"><code>plt.grid(True, alpha=0.3)</code></div>
-        <div class="row"><code>plt.tight_layout()</code></div>
         <div class="row"><code>plt.show()</code></div>
     </div>
 
+    <div class="section" style="border-color: #8e44ad;"><h2 style="background: #8e44ad;">7. Line Graph &amp; Pie Chart</h2>
+        <div class="two-col-inner">
+            <div>
+                <div class="row"><span class="label">Line graph:</span></div>
+                <div class="row"><code>plt.plot(df['Player'], df['PTS'],</code></div>
+                <div class="row"><code>&nbsp;&nbsp;marker='o', color='red', label='PTS')</code></div>
+                <div class="row"><code>plt.legend()</code> - shows the labels</div>
+            </div>
+            <div>
+                <div class="row"><span class="label">Pie chart:</span></div>
+                <div class="row"><code>plt.pie(df['PTS'], labels=df['Player'],</code></div>
+                <div class="row"><code>&nbsp;&nbsp;autopct='%1.0f%%')</code></div>
+                <div class="row">Shows % of total automatically</div>
+            </div>
+        </div>
+    </div>
+
     <div class="section full-width" style="border-color: #2c3e50;">
-        <h2>7. Quick Reference - Common Patterns</h2>
+        <h2>8. Quick Reference - Common Patterns</h2>
         <div class="two-col-inner">
             <div>
                 <div class="row"><span class="label">Filter then graph:</span></div>
@@ -167,10 +183,10 @@
         <div style="margin-top: 5px; border-top: 1px dashed #bdc3c7; padding-top: 4px;">
             <div class="two-col-inner">
                 <div>
-                    <div class="row"><span class="label">Colors you can use:</span> <code>'blue'</code> <code>'red'</code> <code>'green'</code> <code>'purple'</code> <code>'orange'</code> <code>'gold'</code> <code>'dodgerblue'</code> <code>'skyblue'</code></div>
+                    <div class="row"><span class="label">Colors:</span> <code>'blue'</code> <code>'red'</code> <code>'green'</code> <code>'purple'</code> <code>'orange'</code> <code>'gold'</code> <code>'dodgerblue'</code></div>
                 </div>
                 <div>
-                    <div class="row"><span class="label">Common symbols:</span> <code>></code> greater &nbsp; <code><</code> less &nbsp; <code>==</code> equals &nbsp; <code>>=</code> at least &nbsp; <code>!=</code> not equal</div>
+                    <div class="row"><span class="label">Markers (line graph):</span> <code>'o'</code> circle &nbsp; <code>'s'</code> square &nbsp; <code>'^'</code> triangle &nbsp; <code>'D'</code> diamond</div>
                 </div>
             </div>
         </div>
